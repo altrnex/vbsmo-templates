@@ -10,3 +10,7 @@ to the provider packages in the Vibeissimo application repository.
 
 The builder also uses the `*-bootstrap` directories and `astro-toolchain` to prepare new workspaces.
 The Vibeissimo application pins this repository as a Git submodule, so releases use an exact commit.
+
+The canonical repository is `git.seyka.ru/vibeissimo/vbsmo-templates`. GitHub hosts the public
+checkout used by the application and CI; dev Forgejo has the same commits. Push a template change
+to all three before updating the application's submodule commit.

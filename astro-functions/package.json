@@ -1,0 +1,23 @@
+{
+  "name": "vbsmo-app",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.4",
+  "workspaces": [
+    "apps/*",
+    "functions/*"
+  ],
+  "scripts": {
+    "package:api": "sh infra/vbsmo/package.sh",
+    "dev": "bun run --no-orphans --parallel --filter '@vbsmo/*' dev",
+    "build": "bun run --filter '@vbsmo/*' build",
+    "test": "bun run --filter '@vbsmo/*' test",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "bun run --filter '@vbsmo/*' typecheck",
+    "verify": "bun run lint && bun run typecheck && bun run test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.6"
+  }
+}

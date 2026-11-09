@@ -1,0 +1,11 @@
+{
+  "name": "@vbsmo/api",
+  "private": true,
+  "scripts": {
+    "dev": ".venv/bin/python -m uvicorn index:app --host 127.0.0.1 --port 3001 --reload",
+    "test": ".venv/bin/python -m unittest discover",
+    "typecheck": ".venv/bin/python -m compileall -q -x '/.venv/' .",
+    "lint": ".venv/bin/python -m ruff check . && .venv/bin/python -m ruff format --check .",
+    "lint:fix": ".venv/bin/python -m ruff check --fix . && .venv/bin/python -m ruff format ."
+  }
+}

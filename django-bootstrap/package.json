@@ -1,0 +1,23 @@
+{
+  "name": "vibeissimo-django-web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": ".venv/bin/python manage.py runserver 127.0.0.1:4321",
+    "test": ".venv/bin/python manage.py test --noinput",
+    "typecheck": ".venv/bin/python manage.py check",
+    "build": "VBSMO_STATIC_EXPORT=1 .venv/bin/python manage.py distill generate --output-directory dist --collectstatic --force --quiet",
+    "css:build": "bun run tailwindcss --input ./assets/styles/site.css --output ./static/css/site.css --minify",
+    "lint": "bun run lint:ruff && bun run lint:templates",
+    "lint:fix": "bun run lint:ruff:fix && bun run lint:templates:fix && bun run css:build",
+    "lint:ruff": ".venv/bin/python -m ruff check . && .venv/bin/python -m ruff format --check .",
+    "lint:ruff:fix": ".venv/bin/python -m ruff check --fix --unsafe-fixes . && .venv/bin/python -m ruff format .",
+    "lint:templates": ".venv/bin/python -m djlint --check templates siteapp",
+    "lint:templates:fix": ".venv/bin/python -m djlint --reformat templates siteapp"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.5",
+    "lucide-static": "1.70.0",
+    "tailwindcss": "4.3.5"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "vbsmo-application/v1",
+  "layout": "vibeissimo-bun-workspace-v1",
+  "framework": "astro",
+  "projectType": "static-serverless",
+  "webRoot": "apps/web",
+  "capabilities": {
+    "functions": {
+      "runtime": "nodejs22.x",
+      "entrypoint": "functions/api/index.ts",
+      "environment": [],
+      "routes": [
+        {
+          "id": "health.read",
+          "method": "GET",
+          "path": "/v1/health/",
+          "protection": { "captcha": "none" }
+        },
+        {
+          "id": "hello.read",
+          "method": "GET",
+          "path": "/v1/hello",
+          "protection": { "captcha": "none" }
+        },
+        {
+          "id": "hello.submit",
+          "method": "POST",
+          "path": "/v1/hello",
+          "protection": { "captcha": "none" }
+        }
+      ]
+    }
+  }
+}

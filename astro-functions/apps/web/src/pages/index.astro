@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="A small website with a working TypeScript API." />
+    <title>Your first form</title>
+  </head>
+  <body>
+    <main>
+      <h1>Your first form</h1>
+      <p>The website sends your name to the API, which replies with a greeting.</p>
+      <p>This example does not save or send your details anywhere else.</p>
+      <form id="greeting" data-vbsmo-route="hello.submit">
+        <label for="name">Your name</label>
+        <input id="name" name="name" autocomplete="given-name" required maxlength="80" />
+        <button type="submit" disabled>Say hello</button>
+      </form>
+      <p id="result" role="status" aria-live="polite"></p>
+    </main>
+    <script>
+      import { apiUrl } from "../api.ts";
+
+      const form = document.querySelector<HTMLFormElement>("#greeting");
+      const result = document.querySelector<HTMLParagraphElement>("#result");
+      const button = form?.querySelector<HTMLButtonElement>("button");
+
+      if (form && result && button) {
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          button.disabled = true;
+          result.textContent = "Sending…";
+          try {
+            const response = await fetch(await apiUrl("/v1/hello"), {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name: new FormData(form).get("name") }),
+              signal: AbortSignal.timeout(10_000),
+            });
+            const data: { message?: string; error?: string } = await response.json();
+            result.textContent = response.ok
+              ? (data.message ?? "The API returned an unexpected response.")
+              : (data.error ?? "The request failed. Please try again.");
+          } catch {
+            result.textContent = "Could not reach the API. Please try again.";
+          } finally {
+            button.disabled = false;
+          }
+        });
+        button.disabled = false;
+      }
+    </script>
+    <style>
+      :root {
+        font-family: system-ui, sans-serif;
+        color: #172d38;
+        background: #f7f7f2;
+      }
+      main {
+        max-width: 36rem;
+        margin: 12vh auto;
+        padding: 1.5rem;
+        line-height: 1.6;
+      }
+      form {
+        display: grid;
+        gap: 0.75rem;
+        margin-top: 2rem;
+      }
+      input,
+      button {
+        font: inherit;
+        padding: 0.75rem;
+        border: 1px solid #607780;
+        border-radius: 0.25rem;
+      }
+      button {
+        background: #172d38;
+        color: white;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.65;
+        cursor: wait;
+      }
+    </style>
+  </body>
+</html>

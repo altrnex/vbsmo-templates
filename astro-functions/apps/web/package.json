@@ -1,0 +1,21 @@
+{
+  "name": "@vbsmo/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro build",
+    "test": "bun test --pass-with-no-tests",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "astro check"
+  },
+  "dependencies": {
+    "astro": "7.4.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "@types/node": "24.19.2",
+    "typescript": "6.0.3"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "schema": "vbsmo-application/v1",
+  "layout": "vibeissimo-bun-workspace-v1",
+  "framework": "django",
+  "projectType": "static",
+  "webRoot": "apps/web"
+}

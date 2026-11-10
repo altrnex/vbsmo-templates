@@ -1,6 +1,6 @@
 import { Database } from "bun:sqlite";
 import { existsSync, mkdirSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { basename, dirname, resolve } from "node:path";
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import * as schema from "./schema.ts";
 
@@ -10,8 +10,12 @@ export function getDb() {
   if (process.env.NODE_ENV === "production" && !process.env.DATABASE_PATH) {
     throw new Error("DATABASE_PATH is required in production");
   }
+  const cwd = process.cwd();
+  const workspace =
+    basename(cwd) === "web" && basename(dirname(cwd)) === "apps" ? resolve(cwd, "../..") : cwd;
   const filename = resolve(
-    /* turbopackIgnore: true */ process.env.DATABASE_PATH ?? ".vbsmo-runtime/data/app.sqlite",
+    /* turbopackIgnore: true */ process.env.DATABASE_PATH ??
+      resolve(workspace, ".vbsmo-runtime/data/app.sqlite"),
   );
   if (
     process.env.NODE_ENV === "production" &&

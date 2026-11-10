@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun --bun astro dev --host 127.0.0.1",
+    "dev": "bun --bun astro dev --ignore-lock --host 127.0.0.1",
     "build": "bun --bun astro build",
     "test": "bun test --pass-with-no-tests",
     "lint": "biome check .",

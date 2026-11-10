@@ -2,7 +2,14 @@
   "$schema": "https://biomejs.dev/schemas/2.6.6/schema.json",
   "root": true,
   "files": {
-    "includes": ["**", "!!**/node_modules", "!!**/dist", "!!**/.astro", "!!.secrets"]
+    "includes": [
+      "**",
+      "!!**/node_modules",
+      "!!**/dist",
+      "!!**/.astro",
+      "!!**/.vbsmo-runtime",
+      "!!.secrets"
+    ]
   },
   "formatter": {
     "indentStyle": "space",

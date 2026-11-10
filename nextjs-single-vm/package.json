@@ -1,0 +1,27 @@
+{
+  "name": "vbsmo-nextjs-single-vm",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "bun@1.4.4",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun run --no-orphans --parallel --workspaces --if-present dev",
+    "build": "bun run --workspaces --if-present build",
+    "test": "bun run --workspaces --if-present test",
+    "typecheck": "bun run --workspaces --if-present typecheck",
+    "lint": "bun run lint:repo && bun run --workspaces --if-present lint",
+    "lint:fix": "bun run lint:repo:fix && bun run --workspaces --if-present lint:fix",
+    "lint:repo": "bun run biome lint .",
+    "lint:repo:fix": "bun run biome lint --write --unsafe .",
+    "format": "bun fmt",
+    "format:check": "bun fmt --check",
+    "db:generate": "bun --cwd packages/db drizzle-kit generate",
+    "db:migrate": "bun apps/web/src/server/migrate.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.6"
+  }
+}

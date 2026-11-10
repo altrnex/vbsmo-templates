@@ -4,7 +4,8 @@
   "type": "module",
   "packageManager": "bun@1.4.4",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
     "dev": "bun run --no-orphans --parallel --filter '@vbsmo/*' dev",
@@ -14,7 +15,7 @@
     "lint:fix": "biome check --write .",
     "typecheck": "bun run --filter '@vbsmo/*' typecheck",
     "verify": "bun run lint && bun run typecheck && bun run test",
-    "db:generate": "bun --cwd apps/web drizzle-kit generate",
+    "db:generate": "bun --cwd packages/db drizzle-kit generate",
     "db:migrate": "bun apps/web/src/server/migrate.ts"
   },
   "devDependencies": {

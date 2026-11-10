@@ -1,6 +1,6 @@
+import { notes } from "@vbsmo/db/schema";
 import { Hono } from "hono";
 import { getDb } from "./db.ts";
-import { notes } from "./schema.ts";
 
 export const api = new Hono()
   .basePath("/api")

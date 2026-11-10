@@ -1,0 +1,22 @@
+{
+  "name": "@vbsmo/db",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./schema": "./schema.ts"
+  },
+  "scripts": {
+    "test": "bun test --pass-with-no-tests",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.4"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.4",
+    "drizzle-kit": "0.31.11",
+    "typescript": "7.0.2"
+  }
+}

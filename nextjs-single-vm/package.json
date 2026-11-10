@@ -4,7 +4,8 @@
   "private": true,
   "packageManager": "bun@1.4.4",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
     "dev": "bun run --no-orphans --parallel --workspaces --if-present dev",
@@ -15,7 +16,7 @@
     "lint:fix": "bun run lint:repo:fix && bun run --workspaces --if-present lint:fix",
     "lint:repo": "bun run biome check .",
     "lint:repo:fix": "bun run biome check --write --unsafe .",
-    "db:generate": "bun --cwd apps/web drizzle-kit generate",
+    "db:generate": "bun --cwd packages/db drizzle-kit generate",
     "db:migrate": "bun apps/web/src/server/migrate.ts"
   },
   "devDependencies": {

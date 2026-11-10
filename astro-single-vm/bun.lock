@@ -12,6 +12,7 @@
       "name": "@vbsmo/web",
       "dependencies": {
         "@astrojs/node": "11.1.11",
+        "@vbsmo/db": "workspace:*",
         "astro": "7.4.8",
         "drizzle-orm": "0.45.4",
         "hono": "4.13.16",
@@ -20,6 +21,16 @@
         "@astrojs/check": "0.9.12",
         "@types/bun": "1.4.4",
         "@types/node": "24.19.2",
+        "typescript": "6.0.3",
+      },
+    },
+    "packages/db": {
+      "name": "@vbsmo/db",
+      "dependencies": {
+        "drizzle-orm": "0.45.4",
+      },
+      "devDependencies": {
+        "@types/bun": "1.4.4",
         "drizzle-kit": "0.31.11",
         "typescript": "6.0.3",
       },
@@ -333,6 +344,8 @@
     "@types/unist": ["@types/unist@3.0.3", "", {}, "sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q=="],
 
     "@ungap/structured-clone": ["@ungap/structured-clone@1.4.0", "", {}, "sha512-1mEZtMKPM09vDmQt5y7YvmN2+DFTP7Tg0EWXdic8/C6VRnpb33e4ghisCIE3WZjsE2N8mf+QV1Zqh7ZFYLWInQ=="],
+
+    "@vbsmo/db": ["@vbsmo/db@workspace:packages/db"],
 
     "@vbsmo/web": ["@vbsmo/web@workspace:apps/web"],
 

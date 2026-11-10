@@ -1,8 +1,8 @@
 import { Database } from "bun:sqlite";
 import { existsSync, mkdirSync } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
+import * as schema from "@vbsmo/db/schema";
 import { drizzle } from "drizzle-orm/bun-sqlite";
-import * as schema from "./schema.ts";
 
 let connection: ReturnType<typeof drizzle<typeof schema>> | undefined;
 export function getDb() {

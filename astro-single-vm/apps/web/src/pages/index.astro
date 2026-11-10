@@ -2,7 +2,7 @@
 import { getDb } from "../server/db.ts";
 export const prerender = false;
 
-import { notes } from "../server/schema.ts";
+import { notes } from "@vbsmo/db/schema";
 
 const saved = getDb().select().from(notes).all();
 ---

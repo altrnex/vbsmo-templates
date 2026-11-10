@@ -1,5 +1,5 @@
+import { notes } from "@vbsmo/db/schema";
 import { getDb } from "@/server/db";
-import { notes } from "@/server/schema";
 
 export const dynamic = "force-dynamic";
 

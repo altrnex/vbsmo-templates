@@ -1,0 +1,14 @@
+{
+  "schema": "vbsmo-application/v1",
+  "layout": "vibeissimo-bun-workspace-v1",
+  "framework": "nextjs",
+  "webRoot": "apps/web",
+  "projectType": "single-vm",
+  "capabilities": {
+    "vm": {
+      "runtime": "bun1.4",
+      "database": "sqlite",
+      "environment": []
+    }
+  }
+}

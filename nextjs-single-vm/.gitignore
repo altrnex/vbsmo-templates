@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+.vbsmo-runtime/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+next-env.d.ts
+
+**/.vbsmo-runtime/

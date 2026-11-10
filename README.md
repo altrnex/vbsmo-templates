@@ -4,6 +4,10 @@ The builder copies these standalone projects into customer workspaces:
 
 - [astro-functions](astro-functions/README.md): Astro website with an optional Hono API.
 - [nextjs-static](nextjs-static/README.md): Next.js static website.
+- [astro-single-vm](astro-single-vm/README.md): Astro server with embedded Hono and SQLite.
+- [nextjs-single-vm](nextjs-single-vm/README.md): Next.js server with embedded Hono and SQLite.
+
+[Playbooks](playbooks/) describe optional integrations that can be applied to the single-VM templates when requested.
 
 Each project owns its dependencies, lockfile, and check commands. Deployment infrastructure belongs
 to the provider packages in the Vibeissimo application repository.

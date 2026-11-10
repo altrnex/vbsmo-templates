@@ -1,0 +1,21 @@
+services:
+  app:
+    image: ${VBSMO_IMAGE:?Set VBSMO_IMAGE to an immutable release image}
+    restart: unless-stopped
+    volumes:
+      - ${VBSMO_DATA_DIR:?Set VBSMO_DATA_DIR to the mounted data disk}:/data
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    environment:
+      VBSMO_HOSTNAME: ${VBSMO_HOSTNAME:?Set VBSMO_HOSTNAME}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+volumes:
+  caddy_data:
+  caddy_config:

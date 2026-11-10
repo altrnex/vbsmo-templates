@@ -1,0 +1,10 @@
+node_modules
+**/node_modules
+**/.vbsmo-runtime
+**/.next
+**/.astro
+**/dist
+.git
+.env
+.env.*
+.secrets

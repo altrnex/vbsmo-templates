@@ -1,0 +1,3 @@
+{$VBSMO_HOSTNAME} {
+  reverse_proxy app:4321
+}

@@ -1,0 +1,9 @@
+---
+import { getDb } from "../server/db.ts";
+export const prerender = false;
+
+import { notes } from "../server/schema.ts";
+
+const saved = getDb().select().from(notes).all();
+---
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><title>Notes</title></head><body><main><h1>Notes</h1><form action="/api/notes" method="post"><label for="body">New note</label><input id="body" name="body" maxlength="500" required /><button type="submit">Save</button></form><ul>{saved.map((note) => <li>{note.body}</li>)}</ul></main></body></html>

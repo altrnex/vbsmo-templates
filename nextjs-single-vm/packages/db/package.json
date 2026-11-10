@@ -7,9 +7,9 @@
   },
   "scripts": {
     "test": "bun test --pass-with-no-tests",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write .",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write --unsafe .",
+    "typecheck": "bun check"
   },
   "dependencies": {
     "drizzle-orm": "0.45.4"

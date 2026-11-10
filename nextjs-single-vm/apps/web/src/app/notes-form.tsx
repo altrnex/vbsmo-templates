@@ -16,7 +16,8 @@ export function NotesForm() {
       onSubmit={async (event) => {
         event.preventDefault();
         const form = event.currentTarget;
-        const body = (form.elements.namedItem("body") as HTMLInputElement).value;
+        const body = (form.elements.namedItem("body") as HTMLInputElement)
+          .value;
         try {
           const response = await client.api.notes.$post({ json: { body } });
           if (!response.ok) throw new Error("Note rejected");
@@ -29,7 +30,13 @@ export function NotesForm() {
       }}
     >
       <label htmlFor="body">New note</label>
-      <input id="body" name="body" maxLength={500} required className="border p-2" />
+      <input
+        id="body"
+        name="body"
+        maxLength={500}
+        required
+        className="border p-2"
+      />
       <button type="submit" className="border p-2">
         Save
       </button>

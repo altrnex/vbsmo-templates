@@ -16,7 +16,11 @@ export const api = new Hono()
       return { body };
     }),
     (c) => {
-      const note = getDb().insert(notes).values(c.req.valid("json")).returning().get();
+      const note = getDb()
+        .insert(notes)
+        .values(c.req.valid("json"))
+        .returning()
+        .get();
       return c.json(note, 201);
     },
   );

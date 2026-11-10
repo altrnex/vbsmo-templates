@@ -12,7 +12,9 @@ export function getDb() {
   }
   const cwd = process.cwd();
   const workspace =
-    basename(cwd) === "web" && basename(dirname(cwd)) === "apps" ? resolve(cwd, "../..") : cwd;
+    basename(cwd) === "web" && basename(dirname(cwd)) === "apps"
+      ? resolve(cwd, "../..")
+      : cwd;
   const filename = resolve(
     /* turbopackIgnore: true */ process.env.DATABASE_PATH ??
       resolve(workspace, ".vbsmo-runtime/data/app.sqlite"),

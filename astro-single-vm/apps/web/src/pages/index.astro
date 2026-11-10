@@ -6,4 +6,23 @@ import { notes } from "@vbsmo/db/schema";
 
 const saved = getDb().select().from(notes).all();
 ---
-<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><title>Notes</title></head><body><main><h1>Notes</h1><form action="/api/notes" method="post"><label for="body">New note</label><input id="body" name="body" maxlength="500" required /><button type="submit">Save</button></form><ul>{saved.map((note) => <li>{note.body}</li>)}</ul></main></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><title>Notes</title></head><body><main><h1>Notes</h1><form><label for="body">New note</label><input id="body" name="body" maxlength="500" required /><button type="submit">Save</button></form><p id="error" role="alert"></p><ul>{saved.map((note) => <li>{note.body}</li>)}</ul></main></body></html>
+
+<script>
+  import { hc } from "hono/client";
+  import type { ApiType } from "../server/api.ts";
+
+  const client = hc<ApiType>("/");
+  document.querySelector<HTMLFormElement>("form")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const body = document.querySelector<HTMLInputElement>("#body")?.value ?? "";
+    const error = document.querySelector<HTMLElement>("#error");
+    try {
+      const response = await client.api.notes.$post({ json: { body } });
+      if (response.ok) window.location.reload();
+      else if (error) error.textContent = "Could not save note.";
+    } catch {
+      if (error) error.textContent = "Could not save note.";
+    }
+  });
+</script>

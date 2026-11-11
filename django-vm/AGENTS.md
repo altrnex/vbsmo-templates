@@ -2,7 +2,7 @@
 
 Use `vbsmo` for short project prefixes. The Bun workspace keeps Django in `apps/web`. Preserve
 `.vbsmo.json`, the workspace layout and platform-owned deployment inputs. This is a `single-vm`
-application on Django 6.1.1, Python 3.14 and PostgreSQL 17. Use normal Django models, forms, views,
+application on Django 6.1.1, Python 3.14 and PostgreSQL 18. Use normal Django models, forms, views,
 migrations, authentication and sessions. Do not use django-distill or serverless functions.
 
 Read existing files first. Use the ordinary Django `path` function for routes. Keep `/healthz`

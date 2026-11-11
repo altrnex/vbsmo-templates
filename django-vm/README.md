@@ -1,7 +1,7 @@
 # Your Django application
 
 This project runs Django and PostgreSQL. The source in `apps/web` runs locally without Vibeissimo.
-Install Bun 1.4.4, Python 3.14, uv and PostgreSQL 17. Create a private local database and role with
+Install Bun 1.4.4, Python 3.14, uv and PostgreSQL 18. Create a private local database and role with
 permission to create a test database. Export `PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`
 and a randomly generated `DJANGO_SECRET_KEY` in your terminal. Never commit their values.
 
@@ -27,8 +27,9 @@ it does not convert the application to a static website. Serve private uploads t
 Django view, with attachment disposition and `nosniff`; never expose the upload directory publicly.
 
 Vibeissimo preview uses a private PostgreSQL cluster outside tracked source. Data remains while that
-workspace exists. Eviction or another builder reconstructs the schema, not your preview records.
-Preview credentials, data and uploads never enter source downloads or production bundles.
+workspace exists. When preview checkpoints are configured, recovery restores database records and
+private uploads from a compatible checkpoint. Preview credentials, data and uploads never enter
+source downloads or production bundles.
 
 Single-VM cloud publishing is not yet available in Studio. You can create, preview and download this
 Django application now. The planned Yandex deployment uses your own hostname, a reserved address,

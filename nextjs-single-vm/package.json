@@ -19,7 +19,8 @@
     "format": "bun fmt",
     "format:check": "bun fmt --check",
     "db:generate": "bun --cwd packages/db drizzle-kit generate",
-    "db:migrate": "bun apps/web/src/server/migrate.ts"
+    "db:migrate": "bun apps/web/src/server/migrate.ts",
+    "db:check": "bun apps/web/src/server/migrate.ts --check"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.6"

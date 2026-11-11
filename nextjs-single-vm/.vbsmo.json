@@ -7,7 +7,7 @@
   "capabilities": {
     "vm": {
       "runtime": "bun1.4",
-      "database": "sqlite",
+      "database": "postgresql17",
       "environment": []
     }
   }

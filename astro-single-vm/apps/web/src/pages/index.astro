@@ -4,7 +4,7 @@ export const prerender = false;
 
 import { notes } from "@vbsmo/db/schema";
 
-const saved = getDb().select().from(notes).all();
+const saved = await getDb().select().from(notes);
 ---
 <!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><title>Notes</title></head><body><main><h1>Notes</h1><form><label for="body">New note</label><input id="body" name="body" maxlength="500" required /><button type="submit">Save</button></form><p id="error" role="alert"></p><ul>{saved.map((note) => <li>{note.body}</li>)}</ul></main></body></html>
 

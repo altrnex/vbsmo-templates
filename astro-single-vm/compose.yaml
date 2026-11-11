@@ -2,8 +2,26 @@ services:
   app:
     image: ${VBSMO_IMAGE:?Set VBSMO_IMAGE to an immutable release image}
     restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://vbsmo_app:${VBSMO_DB_PASSWORD:?Set a hexadecimal database password}@postgres:5432/vbsmo_app
+    depends_on:
+      postgres:
+        condition: service_healthy
     volumes:
-      - ${VBSMO_DATA_DIR:?Set VBSMO_DATA_DIR to the mounted data disk}:/data
+      - ${VBSMO_DATA_DIR:?Set VBSMO_DATA_DIR to the mounted data disk}/app:/data
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: vbsmo_app
+      POSTGRES_USER: vbsmo_app
+      POSTGRES_PASSWORD: ${VBSMO_DB_PASSWORD:?Set a hexadecimal database password}
+    volumes:
+      - ${VBSMO_DATA_DIR:?Set VBSMO_DATA_DIR to the mounted data disk}/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vbsmo_app -d vbsmo_app"]
+      interval: 5s
+      retries: 10
   caddy:
     image: caddy:2
     restart: unless-stopped

@@ -12,7 +12,7 @@ RUN bun install --production --frozen-lockfile
 COPY --from=build /app/apps/web/dist apps/web/dist
 COPY --from=build /app/apps/web/src/server apps/web/src/server
 COPY --from=build /app/packages/db packages/db
-ENV NODE_ENV=production DATABASE_PATH=/data/app.sqlite
+ENV NODE_ENV=production
 ENV HOST=0.0.0.0 PORT=4321
 EXPOSE 4321
 CMD ["sh", "-c", "bun run db:migrate && exec bun apps/web/dist/server/entry.mjs"]

@@ -2,6 +2,5 @@ FROM oven/bun:1.4.4
 WORKDIR /app
 COPY . .
 RUN bun install --frozen-lockfile
-ENV DATABASE_PATH=/data/app.sqlite
 EXPOSE 3000
 CMD ["sh", "-c", "bun run db:migrate && cd apps/web && exec bun ./node_modules/next/dist/bin/next dev --hostname 0.0.0.0"]

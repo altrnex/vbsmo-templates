@@ -2,6 +2,7 @@
 
 The builder copies these standalone projects into customer workspaces:
 
+- [astro-static](astro-static/README.md): Astro static website (the per-type template for Astro Static applications).
 - [astro-functions](astro-functions/README.md): Astro website with an optional Hono API.
 - [nextjs-static](nextjs-static/README.md): Next.js static website.
 - [astro-single-vm](astro-single-vm/README.md): Astro server with embedded Hono and PostgreSQL.

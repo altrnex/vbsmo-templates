@@ -8,7 +8,7 @@ const migrationsFolder = fileURLToPath(new URL("../../../../packages/db/drizzle"
 try {
   if (process.argv.includes("--check")) {
     const expected = readMigrationFiles({ migrationsFolder });
-    const actual = await getDb().execute(sql`select hash, created_at from drizzle.__drizzle_migrations order by created_at`);
+    const actual = await (await getDb()).execute(sql`select hash, created_at from drizzle.__drizzle_migrations order by created_at`);
     if (
       actual.length !== expected.length ||
       expected.some((migration, index) =>
@@ -16,7 +16,7 @@ try {
         Number(actual[index]?.created_at) !== migration.folderMillis,
       )
     ) throw new Error("Preview database migrations do not match the source");
-  } else await migrate(getDb(), { migrationsFolder });
+  } else await migrate(await getDb(), { migrationsFolder });
 } finally {
   await closeDb();
 }

@@ -1,13 +1,17 @@
 import { readFileSync } from "node:fs";
-import { SQL } from "bun";
 import * as schema from "@vbsmo/db/schema";
-import { drizzle } from "drizzle-orm/bun-sql";
 
-let client: SQL | undefined;
-let connection: ReturnType<typeof drizzle<typeof schema>> | undefined;
+let client: import("bun").SQL | undefined;
+let connection: Promise<Awaited<ReturnType<typeof createDb>>> | undefined;
 
 export function getDb() {
-  if (connection) return connection;
+  if (!connection) connection = createDb();
+  return connection;
+}
+
+async function createDb() {
+  const { SQL } = await import("bun");
+  const { drizzle } = await import("drizzle-orm/bun-sql");
   const previewFile = process.env.VBSMO_PREVIEW_DATABASE_FILE;
   if (previewFile) {
     const config = JSON.parse(readFileSync(previewFile, "utf8")) as {
@@ -29,8 +33,7 @@ export function getDb() {
     if (!url) throw new Error("DATABASE_URL is required");
     client = new SQL({ url, max: 5 });
   }
-  connection = drizzle({ client, schema });
-  return connection;
+  return drizzle({ client, schema });
 }
 
 export async function closeDb() {

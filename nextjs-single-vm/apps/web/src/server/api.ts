@@ -6,7 +6,7 @@ import { getDb } from "./db.ts";
 export const api = new Hono()
   .basePath("/api")
   .get("/health", (c) => c.json({ status: "ok" }, 200))
-  .get("/notes", async (c) => c.json(await getDb().select().from(notes), 200))
+  .get("/notes", async (c) => c.json(await (await getDb()).select().from(notes), 200))
   .post(
     "/notes",
     validator("json", (value, c) => {
@@ -16,7 +16,7 @@ export const api = new Hono()
       return { body };
     }),
     async (c) => {
-      const [note] = await getDb()
+      const [note] = await (await getDb())
         .insert(notes)
         .values(c.req.valid("json"))
         .returning();

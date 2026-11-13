@@ -3,11 +3,18 @@ import * as schema from "@vbsmo/db/schema";
 import { SQL } from "bun";
 import { drizzle } from "drizzle-orm/bun-sql";
 
-let client: SQL | undefined;
+// The dev server re-evaluates this module on reloads; reuse its pool rather than leaking one each time.
+const shared = globalThis as { vbsmoSql?: SQL };
 let connection: ReturnType<typeof drizzle<typeof schema>> | undefined;
 
 export function getDb() {
   if (connection) return connection;
+  shared.vbsmoSql ??= createClient();
+  connection = drizzle({ client: shared.vbsmoSql, schema });
+  return connection;
+}
+
+function createClient() {
   const previewFile = process.env.VBSMO_PREVIEW_DATABASE_FILE;
   if (previewFile) {
     const config = JSON.parse(readFileSync(previewFile, "utf8")) as {
@@ -16,7 +23,7 @@ export function getDb() {
       password: string;
       database: string;
     };
-    client = new SQL({
+    return new SQL({
       adapter: "postgres",
       path: config.socket,
       username: config.user,
@@ -24,17 +31,14 @@ export function getDb() {
       database: config.database,
       max: 5,
     });
-  } else {
-    const url = process.env.DATABASE_URL;
-    if (!url) throw new Error("DATABASE_URL is required");
-    client = new SQL({ url, max: 5 });
   }
-  connection = drizzle({ client, schema });
-  return connection;
+  const url = process.env.DATABASE_URL;
+  if (!url) throw new Error("DATABASE_URL is required");
+  return new SQL({ url, max: 5 });
 }
 
 export async function closeDb() {
-  await client?.close();
-  client = undefined;
+  await shared.vbsmoSql?.close();
+  shared.vbsmoSql = undefined;
   connection = undefined;
 }

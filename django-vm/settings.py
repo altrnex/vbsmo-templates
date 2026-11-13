@@ -21,7 +21,8 @@ DEBUG = not PRODUCTION
 HOSTNAME = os.environ.get("VBSMO_HOSTNAME", "")
 if PRODUCTION and not HOSTNAME:
     raise RuntimeError("The production hostname is required")
-# Preview is reachable only through the authenticated gateway. Preserve its Host for CSRF.
+# Preview is reachable only through the authenticated gateway, which sends the public host
+# as X-Forwarded-Host (USE_X_FORWARDED_HOST below) for host and CSRF origin checks.
 ALLOWED_HOSTS = (
     [HOSTNAME]
     if PRODUCTION
@@ -117,6 +118,7 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_SAMESITE = "Lax"
 CSRF_TRUSTED_ORIGINS = [f"https://{HOSTNAME}"] if PRODUCTION else []
+USE_X_FORWARDED_HOST = bool(preview)
 SECURE_PROXY_SSL_HEADER = (
     ("HTTP_X_FORWARDED_PROTO", "https") if PRODUCTION or preview else None
 )

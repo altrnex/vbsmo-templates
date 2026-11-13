@@ -1,7 +1,8 @@
 import { readFileSync } from "node:fs";
 import * as schema from "@vbsmo/db/schema";
 
-let client: import("bun").SQL | undefined;
+// The dev server re-evaluates this module on reloads; reuse its pool rather than leaking one each time.
+const shared = globalThis as { vbsmoSql?: import("bun").SQL };
 let connection: Promise<Awaited<ReturnType<typeof createDb>>> | undefined;
 
 export function getDb() {
@@ -12,6 +13,11 @@ export function getDb() {
 async function createDb() {
   const { SQL } = await import("bun");
   const { drizzle } = await import("drizzle-orm/bun-sql");
+  shared.vbsmoSql ??= createClient(SQL);
+  return drizzle({ client: shared.vbsmoSql, schema });
+}
+
+function createClient(SQL: typeof import("bun").SQL) {
   const previewFile = process.env.VBSMO_PREVIEW_DATABASE_FILE;
   if (previewFile) {
     const config = JSON.parse(readFileSync(previewFile, "utf8")) as {
@@ -20,7 +26,7 @@ async function createDb() {
       password: string;
       database: string;
     };
-    client = new SQL({
+    return new SQL({
       adapter: "postgres",
       path: config.socket,
       username: config.user,
@@ -28,16 +34,14 @@ async function createDb() {
       database: config.database,
       max: 5,
     });
-  } else {
-    const url = process.env.DATABASE_URL;
-    if (!url) throw new Error("DATABASE_URL is required");
-    client = new SQL({ url, max: 5 });
   }
-  return drizzle({ client, schema });
+  const url = process.env.DATABASE_URL;
+  if (!url) throw new Error("DATABASE_URL is required");
+  return new SQL({ url, max: 5 });
 }
 
 export async function closeDb() {
-  await client?.close();
-  client = undefined;
+  await shared.vbsmoSql?.close();
+  shared.vbsmoSql = undefined;
   connection = undefined;
 }

@@ -108,13 +108,18 @@ if (
   process.argv[1] &&
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
-  const root = path.resolve("apps/web");
-  if (process.argv[2] === "build") {
-    const lint = Bun.spawnSync(["bun", "run", "biome", "check", "."], {
-      stdout: "inherit",
-      stderr: "inherit",
-    });
-    if (lint.exitCode !== 0) process.exit(lint.exitCode);
-    await buildSite(root);
-  } else await validateSite(root);
+  try {
+    const root = path.resolve("apps/web");
+    if (process.argv[2] === "build") {
+      const lint = Bun.spawnSync(["bun", "run", "biome", "check", "."], {
+        stdout: "inherit",
+        stderr: "inherit",
+      });
+      if (lint.exitCode !== 0) process.exit(lint.exitCode);
+      await buildSite(root);
+    } else await validateSite(root);
+  } catch (error) {
+    console.error(error.message);
+    process.exitCode = 1;
+  }
 }

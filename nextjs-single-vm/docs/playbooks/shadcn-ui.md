@@ -1,14 +1,14 @@
 # shadcn/ui
 
-Use the installed kit first: button, input, label, textarea, card, dialog, dropdown-menu, select, tabs, sheet and sonner in `apps/web/src/components/ui/`. `cn()` lives in `@/lib/utils`. Sonner is mounted once in the root layout. Its wrapper uses system preference without a Next-specific theme provider; semantic CSS colours still follow the document theme.
+Use the installed kit first: button, input, label, textarea, card, dialog, dropdown-menu, select, tabs, sheet and sonner in `apps/web/src/components/ui/`. `cn()` lives in `@/lib/utils`. Sonner is mounted once in the root layout.
 
 ## Source and theme contract
 
-These are the Radix-based New York components from shadcn **4.23.0**, pinned to upstream commit `96da9cc7f1aa10580a3741664e2a77c721206c00`. The immutable registry directory is:
+These are the Tailwind 4 Radix-based New York components from shadcn **4.23.0**, pinned to upstream commit `96da9cc7f1aa10580a3741664e2a77c721206c00`. The immutable registry directory is:
 
-`https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/public/r/styles/new-york/`
+`https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/new-york-v4/ui/`
 
-Each `<name>.json` contains `files[].content`, dependencies and any registry dependencies. Use that pinned source, not a moving registry or latest release. Keep the source's React client directives. The Sonner wrapper deliberately replaces next-themes with `theme="system"` so it works in both frameworks.
+Use the pinned `<name>.tsx` source, not a moving registry or latest release. Resolve its local UI imports to `@/components/ui/` and its `cn` import to `@/lib/utils`; keep its React client directives. The Sonner wrapper uses inline colour variables from the document theme without next-themes, so toast backgrounds, borders and text follow both `:root` and `.dark`.
 
 Change semantic variables in the global stylesheet (`src/app/globals.css` in Next; `src/styles/globals.css` in Astro). Light values live in `:root`, dark values in `.dark`; set the document's `.dark` class to select them. Tailwind mappings, portal surfaces and accordion animations already exist. Prefer variable changes to per-component colour overrides. No theme-switcher dependency is needed.
 
@@ -16,84 +16,92 @@ Change semantic variables in the global stylesheet (`src/app/globals.css` in Nex
 
 The builder shell rejects both `bunx shadcn@4.23.0 add accordion` and `bun x shadcn@4.23.0 add accordion` before package execution. Do not wrap the CLI in another command or run npm/npx. Use write/edit plus the normal platform dependency path:
 
-1. Read the pinned accordion source under **Accordion source** below. It is embedded because the current builder image has no `curl` binary; an allowed HTTP command alone does not prove that command is installed.
-2. Use the harness write tool to save that TSX as `apps/web/src/components/ui/accordion.tsx`. Its imports are `@radix-ui/react-accordion`, `lucide-react`, React and `@/lib/utils`; only the first dependency is new. No registry dependencies are needed. Format the new source with the project's existing formatter if necessary.
+1. Read the pinned accordion source under **Accordion source** below. It is embedded because the current builder image has no `curl` binary; use the embedded source without a registry fetch.
+2. Use the harness write tool to save that TSX as `apps/web/src/components/ui/accordion.tsx`. Its imports are `radix-ui`, `lucide-react`, React and `@/lib/utils`, already installed by the core kit. The command below keeps the shared Radix dependency pinned; adding the component does not require another package. Format the new source with the project's existing formatter if necessary.
 3. Run this exact allowed command from the workspace root:
 
-   `bun add --cwd apps/web --exact --lockfile-only --ignore-scripts @radix-ui/react-accordion@1.3.1`
+   `bun add --cwd apps/web --exact --lockfile-only --ignore-scripts radix-ui@1.8.1`
 
 4. Call `project_check` with `operation: "dependencies"`. This is the platform-owned frozen-lockfile install; direct `bun install` is unavailable in the shell. Keep both `apps/web/package.json` and the root `bun.lock` in the change. Never edit node_modules or execute downloaded files there.
 5. Import `Accordion`, `AccordionItem`, `AccordionTrigger` and `AccordionContent` from `@/components/ui/accordion`. A minimal use is `<Accordion type="single" collapsible><AccordionItem value="help"><AccordionTrigger>Help</AccordionTrigger><AccordionContent>Your help text</AccordionContent></AccordionItem></Accordion>`.
 6. In Next, use this interactive tree inside a `"use client"` component. In Astro, put the whole tree in one React component (for example `src/components/HelpAccordion.tsx`) and hydrate that component from the `.astro` page with `client:load`.
 7. Call `project_check` with `operation: "verify"`, then open/close the accordion in preview and check console errors. Verify the existing Notes submission still works.
 
-For another component, obtain its JSON from the immutable registry directory using an available research tool, inspect its files and recursively include its listed registry dependencies. Pin compatible npm dependencies explicitly using the same lockfile-only/install path. Do not assume curl exists. If no available tool can retrieve the pinned source, report that blocker; do not invent the component or bypass policy.
-
-Sandbox evidence: a live flash-harness probe rejected `bunx shadcn@4.23.0 add accordion` with the shell allowlist error and returned `curl: command not found` for registry retrieval. Use the embedded-source recipe plus the platform dependency installer. The embedded-source path was proven in the builder sandbox with the flash harness: it wrote the pinned accordion source, ran the exact lockfile-only dependency command above, installed through `project_check dependencies`, and passed `project_check verify`; the accordion opened and closed in the Astro preview. No registry fetch or CLI execution is needed for this recipe.
+For another component, obtain its TSX from the immutable source directory using an available research tool, inspect its imports and include any referenced local UI components. Pin compatible npm dependencies explicitly using the same lockfile-only/install path. If no available tool can retrieve the pinned source, report that blocker; do not invent the component or bypass policy.
 
 ## Accordion source
 
-Copied from the immutable registry item above; keep its imports and exports.
+Copied from the immutable Tailwind 4 source above, with the cn import resolved to this template; keep its imports and exports.
 
 ```tsx
 "use client";
 
 import * as React from "react";
-import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
-
 import { cn } from "@/lib/utils";
+import { ChevronDownIcon } from "lucide-react";
+import { Accordion as AccordionPrimitive } from "radix-ui";
 
-const Accordion = AccordionPrimitive.Root;
+function Accordion({ ...props }: React.ComponentProps<typeof AccordionPrimitive.Root>) {
+  return <AccordionPrimitive.Root data-slot="accordion" {...props} />;
+}
 
-const AccordionItem = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item ref={ref} className={cn("border-b", className)} {...props} />
-));
-AccordionItem.displayName = "AccordionItem";
+function AccordionItem({
+  className,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Item>) {
+  return (
+    <AccordionPrimitive.Item
+      data-slot="accordion-item"
+      className={cn("border-b last:border-b-0", className)}
+      {...props}
+    />
+  );
+}
 
-const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
-    <AccordionPrimitive.Trigger
-      ref={ref}
-      className={cn(
-        "flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all hover:underline text-left [&[data-state=open]>svg]:rotate-180",
-        className,
-      )}
+function AccordionTrigger({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+  return (
+    <AccordionPrimitive.Header className="flex">
+      <AccordionPrimitive.Trigger
+        data-slot="accordion-trigger"
+        className={cn(
+          "flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+        <ChevronDownIcon className="pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground transition-transform duration-200" />
+      </AccordionPrimitive.Trigger>
+    </AccordionPrimitive.Header>
+  );
+}
+
+function AccordionContent({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Content>) {
+  return (
+    <AccordionPrimitive.Content
+      data-slot="accordion-content"
+      className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
       {...props}
     >
-      {children}
-      <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
-    </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
-));
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
-
-const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
-    {...props}
-  >
-    <div className={cn("pb-4 pt-0", className)}>{children}</div>
-  </AccordionPrimitive.Content>
-));
-AccordionContent.displayName = AccordionPrimitive.Content.displayName;
+      <div className={cn("pt-0 pb-4", className)}>{children}</div>
+    </AccordionPrimitive.Content>
+  );
+}
 
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
 ```
 
 ## Astro island rules
 
-Static React UI can render on the server without a hydration directive. Use `client:load` for immediately available controls and `client:visible` for controls below the fold. Put Radix trigger, state, content and portal inside the same React island: separate islands cannot share React context. Do not pass React component functions as props from Astro. Never import database modules, Node-only code or server-only API implementations into an island; browser API clients may import the API type with `import type`. Keep Astro's server output, Node adapter and embedded Hono router unchanged. The starter's About notes dialog demonstrates the boundary.
+Static React UI can render on the server without a hydration directive. Use `client:load` for immediately available controls and `client:visible` for controls below the fold. Put Radix trigger, state, content and portal inside the same React island: separate islands cannot share React context. Do not pass React component functions as props from Astro. Never import database modules, Node-only code or server-only API implementations into an island; browser API clients may import the API type with `import type`. Keep Astro's server output, Node adapter and embedded Hono router unchanged. The Astro starter's About notes dialog demonstrates the boundary.
 
 ## Verification outside the builder
 

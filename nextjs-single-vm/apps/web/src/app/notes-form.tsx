@@ -15,12 +15,10 @@ export function NotesForm() {
   const [error, setError] = useState("");
   return (
     <form
-      className="flex gap-2"
       onSubmit={async (event) => {
         event.preventDefault();
         const form = event.currentTarget;
-        const body = (form.elements.namedItem("body") as HTMLInputElement)
-          .value;
+        const body = (form.elements.namedItem("body") as HTMLInputElement).value;
         try {
           const response = await client.api.notes.$post({ json: { body } });
           if (!response.ok) throw new Error("Note rejected");
@@ -32,16 +30,11 @@ export function NotesForm() {
         }
       }}
     >
-      <Label htmlFor="body">New note</Label>
-      <Input
-        id="body"
-        name="body"
-        maxLength={500}
-        required
-      />
-      <Button type="submit">
-        Save
-      </Button>
+      <div className="flex items-center gap-2">
+        <Label htmlFor="body">New note</Label>
+        <Input id="body" name="body" maxLength={500} required />
+        <Button type="submit">Save</Button>
+      </div>
       {error && <p role="alert">{error}</p>}
     </form>
   );

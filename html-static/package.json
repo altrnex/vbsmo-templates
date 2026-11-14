@@ -1,0 +1,17 @@
+{
+  "name": "vbsmo-app",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.4",
+  "scripts": {
+    "build": "bun tools/site.js build",
+    "lint": "biome check . && bun tools/site.js check",
+    "lint:fix": "biome check --write .",
+    "test": "bun test tools"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.6",
+    "html-validate": "10.5.0",
+    "parse5": "8.0.0"
+  }
+}

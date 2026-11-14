@@ -3,6 +3,9 @@
 import { hc } from "hono/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import type { ApiType } from "@/server/api";
 
 const client = hc<ApiType>("/");
@@ -29,17 +32,16 @@ export function NotesForm() {
         }
       }}
     >
-      <label htmlFor="body">New note</label>
-      <input
+      <Label htmlFor="body">New note</Label>
+      <Input
         id="body"
         name="body"
         maxLength={500}
         required
-        className="border p-2"
       />
-      <button type="submit" className="border p-2">
+      <Button type="submit">
         Save
-      </button>
+      </Button>
       {error && <p role="alert">{error}</p>}
     </form>
   );

@@ -4,6 +4,11 @@
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "types": ["bun", "node"],
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }

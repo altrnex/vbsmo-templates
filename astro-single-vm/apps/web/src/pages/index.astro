@@ -1,4 +1,9 @@
 ---
+import { NotesHelp } from "../components/NotesHelp";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import Layout from "../layouts/Layout.astro";
 import { getDb } from "../server/db.ts";
 export const prerender = false;
 
@@ -6,7 +11,19 @@ import { notes } from "@vbsmo/db/schema";
 
 const saved = await getDb().select().from(notes);
 ---
-<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><title>Notes</title></head><body><main><h1>Notes</h1><form><label for="body">New note</label><input id="body" name="body" maxlength="500" required /><button type="submit">Save</button></form><p id="error" role="alert"></p><ul>{saved.map((note) => <li>{note.body}</li>)}</ul></main></body></html>
+<Layout>
+  <main class="mx-auto max-w-xl space-y-6 p-8">
+    <h1 class="text-3xl font-semibold">Notes</h1>
+    <NotesHelp client:load />
+    <form class="flex items-center gap-2">
+      <Label htmlFor="body">New note</Label>
+      <Input id="body" name="body" maxLength={500} required />
+      <Button type="submit">Save</Button>
+    </form>
+    <p id="error" role="alert"></p>
+    <ul>{saved.map((note) => <li>{note.body}</li>)}</ul>
+  </main>
+</Layout>
 
 <script>
   import { hc } from "hono/client";

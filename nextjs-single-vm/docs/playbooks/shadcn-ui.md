@@ -29,34 +29,30 @@ The builder shell rejects both `bunx shadcn@4.23.0 add accordion` and `bun x sha
 
 For another component, obtain its JSON from the immutable registry directory using an available research tool, inspect its files and recursively include its listed registry dependencies. Pin compatible npm dependencies explicitly using the same lockfile-only/install path. Do not assume curl exists. If no available tool can retrieve the pinned source, report that blocker; do not invent the component or bypass policy.
 
-Sandbox evidence: a live flash-harness probe rejected `bunx shadcn@4.23.0 add accordion` with the shell allowlist error and returned `curl: command not found` for registry retrieval. Use the embedded-source recipe plus the platform dependency installer. Dependency installation and rendering are verified separately in dev-test.
+Sandbox evidence: a live flash-harness probe rejected `bunx shadcn@4.23.0 add accordion` with the shell allowlist error and returned `curl: command not found` for registry retrieval. Use the embedded-source recipe plus the platform dependency installer. The embedded-source path was proven in the builder sandbox with the flash harness: it wrote the pinned accordion source, ran the exact lockfile-only dependency command above, installed through `project_check dependencies`, and passed `project_check verify`; the accordion opened and closed in the Astro preview. No registry fetch or CLI execution is needed for this recipe.
 
 ## Accordion source
 
 Copied from the immutable registry item above; keep its imports and exports.
 
 ```tsx
-"use client"
+"use client";
 
-import * as React from "react"
-import * as AccordionPrimitive from "@radix-ui/react-accordion"
-import { ChevronDown } from "lucide-react"
+import * as React from "react";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { ChevronDown } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-const Accordion = AccordionPrimitive.Root
+const Accordion = AccordionPrimitive.Root;
 
 const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
 >(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item
-    ref={ref}
-    className={cn("border-b", className)}
-    {...props}
-  />
-))
-AccordionItem.displayName = "AccordionItem"
+  <AccordionPrimitive.Item ref={ref} className={cn("border-b", className)} {...props} />
+));
+AccordionItem.displayName = "AccordionItem";
 
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
@@ -67,7 +63,7 @@ const AccordionTrigger = React.forwardRef<
       ref={ref}
       className={cn(
         "flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all hover:underline text-left [&[data-state=open]>svg]:rotate-180",
-        className
+        className,
       )}
       {...props}
     >
@@ -75,8 +71,8 @@ const AccordionTrigger = React.forwardRef<
       <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
-))
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
+));
+AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 
 const AccordionContent = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Content>,
@@ -89,10 +85,10 @@ const AccordionContent = React.forwardRef<
   >
     <div className={cn("pb-4 pt-0", className)}>{children}</div>
   </AccordionPrimitive.Content>
-))
-AccordionContent.displayName = AccordionPrimitive.Content.displayName
+));
+AccordionContent.displayName = AccordionPrimitive.Content.displayName;
 
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
 ```
 
 ## Astro island rules

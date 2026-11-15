@@ -29,7 +29,7 @@ Never place runtime data, uploads, credentials or `.vbsmo-runtime` in source con
 
 Use `project_check environment` to discover customer variable names, never values. Run
 `project_check migrations` after changing models, inspect the generated files, then run
-`project_check verify` before finishing. Do not execute Python management commands through shell.
+`project_check verify` before finishing. Do not run `runserver`.
 Use `project_config` to declare application environment names. It checks Django, tests against a separate database and
 collects static assets. The platform supervises preview and PostgreSQL; do not start background
 servers or reset preview data yourself. Explain that preview data is disposable when a workspace is

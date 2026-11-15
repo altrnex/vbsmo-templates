@@ -33,10 +33,10 @@ source downloads or production bundles.
 
 On a VM, write the application's environment values to `.env.production` beside `compose.yaml`, one
 `NAME='value'` line each (a value cannot contain `'`); the build and the app read them from that
-file. Set `VBSMO_HOSTNAME`, an absolute `VBSMO_DATA_DIR` on the mounted data disk, and
-`VBSMO_DB_PASSWORD` to a random hexadecimal password (for example, `openssl rand -hex 32`). `docker
-compose up -d --build` builds the app from `Dockerfile` and starts it with PostgreSQL 18 and Caddy,
-which obtains the certificate for the hostname. The app keeps its media and generated secret key in
-`app/`. Keep `app/`, `postgres/` and `caddy/` under `VBSMO_DATA_DIR` across releases. Cloud
-operations and routine backups remain in your cloud console. Restoring source does not undo database
-changes.
+file. Export `VBSMO_HOSTNAME`, an absolute `VBSMO_DATA_DIR` on the mounted data disk, and
+`VBSMO_DB_PASSWORD` (a random hexadecimal password, for example `openssl rand -hex 32`) in the shell
+that runs `docker compose`, not in `.env.production`. `docker compose up -d --build` builds the app
+from `Dockerfile` and starts it with PostgreSQL 18 and Caddy, which obtains the certificate for the
+hostname. The app keeps its media and generated secret key in `app/`. Keep `app/`, `postgres/` and
+`caddy/` under `VBSMO_DATA_DIR` across releases. Cloud operations and routine backups remain in your
+cloud console. Restoring source does not undo database changes.

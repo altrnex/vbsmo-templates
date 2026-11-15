@@ -4,10 +4,9 @@ WORKDIR /app
 COPY . .
 RUN bun install --frozen-lockfile && python -m venv apps/web/.venv \
   && apps/web/.venv/bin/pip install --no-cache-dir -r apps/web/requirements.txt
-# collectstatic signs nothing; the throwaway key never leaves this step.
 RUN --mount=type=secret,id=app_env,target=/run/secrets/app_env \
   set -a && . /run/secrets/app_env && set +a \
-  && DJANGO_SECRET_KEY="$(python -c 'import secrets; print(secrets.token_urlsafe(50))')" bun run build
+  && DJANGO_SECRET_KEY=collectstatic bun run build
 WORKDIR /app/apps/web
 ENV VBSMO_PRODUCTION=1
 EXPOSE 8000

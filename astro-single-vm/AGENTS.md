@@ -7,3 +7,5 @@ PostgreSQL 18 is the only database. Set `DATABASE_URL` locally and in production
 Read the applicable `docs/playbooks` file when the user requests an optional integration. Astro i18n uses built-in routing. Better Auth can use the existing embedded Hono router and database; it does not require another service. Keep the root lockfile synchronized when adding dependencies. Verify with `bun run lint`, `bun run typecheck`, `bun run test`, and `bun run build` after the requested feature works.
 
 UI uses the preinstalled shadcn/ui components; read `docs/playbooks/shadcn-ui.md` before adding UI components.
+
+When the owner wants to edit content themselves, read `docs/playbooks/admin-content.md` for the small owner-only admin recipe.

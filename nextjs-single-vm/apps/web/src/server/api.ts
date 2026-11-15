@@ -1,7 +1,10 @@
+import { zValidator } from "@hono/zod-validator";
 import { notes } from "@vbsmo/db/schema";
 import { Hono } from "hono";
-import { validator } from "hono/validator";
+import { z } from "zod";
 import { getDb } from "./db.ts";
+
+const newNote = z.object({ body: z.string().trim().min(1).max(500) });
 
 export const api = new Hono()
   .basePath("/api")
@@ -9,11 +12,8 @@ export const api = new Hono()
   .get("/notes", async (c) => c.json(await (await getDb()).select().from(notes), 200))
   .post(
     "/notes",
-    validator("json", (value, c) => {
-      const body = typeof value.body === "string" ? value.body.trim() : "";
-      if (!body || body.length > 500)
-        return c.json({ error: "Enter a note of 1–500 characters." }, 400);
-      return { body };
+    zValidator("json", newNote, (result, c) => {
+      if (!result.success) return c.json({ error: "Enter a note of 1–500 characters." }, 400);
     }),
     async (c) => {
       const [note] = await (await getDb())

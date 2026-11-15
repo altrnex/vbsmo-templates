@@ -1,6 +1,9 @@
 services:
   app:
-    image: ${VBSMO_IMAGE:?Set VBSMO_IMAGE to an immutable release image}
+    build:
+      context: .
+      secrets: [app_env]
+    env_file: .env.production
     restart: unless-stopped
     environment:
       DATABASE_URL: postgresql://vbsmo_app:${VBSMO_DB_PASSWORD:?Set a hexadecimal database password}@postgres:5432/vbsmo_app
@@ -33,8 +36,7 @@ services:
       - "443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-volumes:
-  caddy_data:
-  caddy_config:
+      - ${VBSMO_DATA_DIR:?Set VBSMO_DATA_DIR to the mounted data disk}/caddy:/data
+secrets:
+  app_env:
+    file: .env.production

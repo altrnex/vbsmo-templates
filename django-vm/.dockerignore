@@ -1,0 +1,8 @@
+.git
+**/node_modules
+**/.venv
+**/.vbsmo-runtime
+**/staticfiles
+apps/web/media
+.env
+.env.*

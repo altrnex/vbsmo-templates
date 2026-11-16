@@ -43,6 +43,8 @@ INSTALLED_APPS = [
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # gunicorn behind Caddy serves the collected static files itself.
+    *(["whitenoise.middleware.WhiteNoiseMiddleware"] if PRODUCTION else []),
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",

@@ -12,8 +12,8 @@ import { notes } from "@vbsmo/db/schema";
 const saved = await getDb().select().from(notes);
 ---
 <Layout>
-  <main class="mx-auto max-w-xl space-y-6 p-8">
-    <h1 class="text-3xl font-semibold">Notes</h1>
+  <main class="mx-auto space-y-6 p-8">
+    <h1 class="font-semibold">Notes</h1>
     <NotesHelp client:load />
     <form class="flex items-center gap-2">
       <Label htmlFor="body">New note</Label>

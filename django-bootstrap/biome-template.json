@@ -15,7 +15,8 @@
       "!**/*.html",
       "!**/*.svg",
       "!**/static/css/site.css",
-      "!**/staticfiles"
+      "!**/staticfiles",
+      "!!infra"
     ]
   },
   "formatter": {

@@ -62,7 +62,5 @@ but no authentication, database, email delivery or persistent storage.
 
 ## Deploy
 
-Read [infra/tofu/README.md](infra/tofu/README.md) for your selected provider's prerequisites,
-public inputs, secret setup and publish/inspect/destroy commands. Studio fills public connection
-inputs when you link the project. A downloaded checkout uses those same files and ordinary CLIs.
-Remote OpenTofu state is the only source of deployment IDs and URLs; there is no second descriptor.
+`infra/` belongs to the platform: it writes the deployment files there when the application is
+linked. Leave it unchanged.

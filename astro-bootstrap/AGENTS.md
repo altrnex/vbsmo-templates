@@ -76,10 +76,10 @@ file, and replace the starter state below with current facts rather than a trans
 - Treat the customer's prompt as the complete product brief. Deliver a polished, production-minded result whose size and complexity fit the request.
 - Preserve the requested premise, audience, language, page count and constraints. Use the language of the request
   for site copy and metadata unless another language is specified. A single-page request stays one page.
-- Make conservative decisions when details are missing. Ask a focused question only when the answer materially changes the site's purpose, content, or scope.
+- When scope or content details are missing, make conservative decisions about scope and content only; this is not a visual instruction. Ask a focused question only when the answer materially changes the site's purpose, content, or scope.
 - Use familiar, content-first structure for blogs, news, documentation, directories, and utilities. Do not turn a small site into a presentation-style landing page.
-- Establish a restrained visual system and reuse its spacing, type, color, and component rules consistently.
-- Represent the image slots a finished site normally needs. When real assets are unavailable, create a small set of simple reusable local SVG placeholders with appropriate aspect ratios, restrained color fields, and a relevant emoji or simple geometric motif. Give rendered images useful alternative text. A blog or news site should include feature/post image placeholders; do not omit its visual content structure or spend the turn producing detailed custom illustrations.
+- Establish a coherent visual system and reuse its spacing, type, color, and component rules consistently.
+- Represent the image slots a finished site normally needs. When real assets are unavailable, create a small set of simple reusable local SVG placeholders drawn in the site's own palette and motif, with appropriate aspect ratios and no emoji. Give rendered images useful alternative text. A blog or news site should include feature/post image placeholders; do not omit its visual content structure or spend the turn producing detailed custom illustrations.
 - Build all requested pages and working internal navigation. Use ordinary root-relative or relative Astro URLs; preview and deployed pages are served at the application root.
 - Forms must do what their labels promise. Do not invent contact destinations, use mailto form actions,
   or show a sent/saved confirmation without actually delivering/storing the submission. Use the enabled

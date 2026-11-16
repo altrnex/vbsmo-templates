@@ -7,8 +7,8 @@ export const dynamic = "force-dynamic";
 export default async function Page() {
   const saved = await (await getDb()).select().from(notes);
   return (
-    <main className="mx-auto max-w-xl space-y-6 p-8">
-      <h1 className="text-3xl font-semibold">Notes</h1>
+    <main className="mx-auto space-y-6 p-8">
+      <h1 className="font-semibold">Notes</h1>
       <NotesForm />
       <ul>
         {saved.map((note) => (

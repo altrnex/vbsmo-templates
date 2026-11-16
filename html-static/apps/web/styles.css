@@ -1,22 +1,9 @@
-:root {
-  --background: #faf7ef;
-  --foreground: #24251e;
-  --accent: #38664c;
-  font-family: system-ui, sans-serif;
-  color: var(--foreground);
-  background: var(--background);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
+
 body {
-  max-width: 68rem;
-  margin: auto;
-  padding: 2rem;
-}
-main {
-  padding-block: 5rem;
-}
-h1 {
-  font-size: clamp(2.5rem, 8vw, 5rem);
-}
-a {
-  color: var(--accent);
+  margin: 0;
 }

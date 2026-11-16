@@ -1,3 +1,7 @@
 {$VBSMO_HOSTNAME} {
+  handle /vbsmo-images/* {
+    root * /data
+    file_server
+  }
   reverse_proxy app:4321
 }

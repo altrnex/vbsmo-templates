@@ -7,11 +7,11 @@
   owned by `apps/web`.
 - `functions/*` is reserved for independently deployable trusted compute and `packages/*` for shared TypeScript
   contracts and implementation-neutral libraries. Create those workspaces only when a platform capability or an
-  explicit customer request requires them. `infra/` is the tracked deployment boundary; preserve its `.gitkeep`
-  until real deployment configuration replaces it.
+  explicit customer request requires them. `infra/` belongs to the platform:
+  it writes the deployment files there when the application is linked. Leave it unchanged.
 - Keep the site in `apps/web`. Provider credentials, CAPTCHA verification, delivery credentials, and other trusted
   integrations must never enter browser assets or templates. A future independently deployed capability should use
-  a provider-independent contract in `packages/contracts` and provider-specific infrastructure under `infra/`.
+  a provider-independent contract in `packages/contracts`.
 - `.vbsmo.json` declares the project capabilities. When functions are enabled, follow `functions/api/AGENTS.md`
   for the independent API. Keep `apps/web` static; never invent unsupported backend resources or secrets.
 

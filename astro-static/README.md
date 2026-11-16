@@ -39,8 +39,7 @@ the API uses `bun check` for typechecking and TypeScript **7.0.2** for compilati
 JavaScript emitted by `tsc`, one file per source file. `.build/function.zip` contains that code and
 normal production dependencies, not a bundled build program. These outputs are ignored by Git.
 
-The short packaging script is `infra/vbsmo/package.sh`. It uses a temporary directory and removes it
-on exit. Build without cloud credentials. Building does not publish or change infrastructure.
+Build without cloud credentials. Building does not publish or change infrastructure.
 Serving the static output alone does not start the API; use `bun run dev` for local form testing.
 
 ## API routes and environment
@@ -64,10 +63,5 @@ The starter has validation, but no database, authentication, email delivery or p
 
 ## Deploy
 
-When cloud hosting is configured, read [infra/tofu/README.md](infra/tofu/README.md). It lists provider
-prerequisites, public configuration, secret setup and the publish/inspect/destroy commands. Studio
-fills the public inputs when you link the project; a downloaded Git checkout uses the same files
-and ordinary CLIs. Remote OpenTofu state owns deployment IDs and URLs, with no second descriptor.
-
-The maintained reference template may be used locally without a cloud configuration. Deployment
-requires the selected provider's `infra/tofu` files and public connection inputs first.
+`infra/` belongs to the platform: it writes the deployment files there when the application is
+linked. Leave it unchanged.

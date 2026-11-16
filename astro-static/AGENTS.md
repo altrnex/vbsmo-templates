@@ -6,8 +6,8 @@
   the repository root and keep the single root `bun.lock` synchronized.
 - `functions/*` is reserved for independently deployable trusted compute and `packages/*` for shared contracts and
   implementation-neutral libraries. Create those workspaces only when a platform capability or an explicit customer
-  request requires them. `infra/` is the tracked deployment boundary; preserve its `.gitkeep` until real deployment
-  configuration replaces it.
+  request requires them. `infra/` belongs to the platform: it writes the deployment files there
+  when the application is linked. Leave it unchanged.
 - Keep browser and static-site code in `apps/web`. A trusted endpoint such as a contact-form receiver belongs in
   `functions/<capability>`, with request and response schemas in `packages/contracts`; never put it under
   `apps/web/src/pages/api` merely to make the static site behave like a server application.

@@ -4,23 +4,16 @@
 
 - This is a Bun workspace repository. The static Astro application lives in `apps/web`; run the root scripts from
   the repository root and keep the single root `bun.lock` synchronized.
-- `functions/*` is reserved for independently deployable trusted compute and `packages/*` for shared contracts and
-  implementation-neutral libraries. Create those workspaces only when a platform capability or an explicit customer
-  request requires them. `infra/` belongs to the platform: it writes the deployment files there
-  when the application is linked. Leave it unchanged.
-- Keep browser and static-site code in `apps/web`. A trusted endpoint such as a contact-form receiver belongs in
-  `functions/<capability>`, with request and response schemas in `packages/contracts`; never put it under
-  `apps/web/src/pages/api` merely to make the static site behave like a server application.
-- Keep capability contracts provider-independent. Provider adapters and OpenTofu modules may implement those
-  contracts later without leaking provider credentials or server validation logic into the static bundle.
-- `.vbsmo.json` declares the project capabilities. When functions are enabled, follow `functions/api/AGENTS.md`
-  for the independent API. Keep `apps/web` static; never invent unsupported backend resources or secrets.
+- `packages/*` holds shared contracts and implementation-neutral libraries. `infra/` belongs to the platform: it writes the deployment files there when the application is linked. Leave it unchanged.
+- Keep browser and static-site code in `apps/web`; never put trusted endpoints under `apps/web/src/pages/api`
+  to make the static site behave like a server application.
+- `.vbsmo.json` declares the project layout and type. Keep `apps/web` static; never invent unsupported backend resources or secrets.
 
 ## Stack
 
 - This project was created from Astro's official minimal starter and exact-pinned to Astro 7.4.8.
 - Bun is the package manager and development runtime. Never use `npm`, `npx`, `yarn`, or `pnpm`, and never execute a path inside `node_modules` directly; use a repository script or `bun run <binary>`.
-- Keep the site static unless the customer explicitly asks for server behavior.
+- Keep the site static.
 - TypeScript is strict. Prefer small Astro components, semantic HTML, and Tailwind utilities over unnecessary client-side JavaScript.
 - Tailwind CSS 4 is installed through its official Vite plugin. The bootstrap's minimal `apps/web/src/layouts/BaseLayout.astro` already imports the existing `apps/web/src/styles/global.css` entrypoint. Keep that connection when refining or replacing the layout, use the shared layout for every page, use Tailwind as the primary styling vocabulary, and keep project-wide tokens in that CSS file.
 - `astro-icon` and the local `@iconify-json/lucide` collection are installed. Follow the `Add icons` example below instead of copying SVG path markup or fetching interface icons at runtime.

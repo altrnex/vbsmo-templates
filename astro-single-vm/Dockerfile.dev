@@ -1,6 +1,0 @@
-FROM oven/bun:1.4.4
-WORKDIR /app
-COPY . .
-RUN bun install --frozen-lockfile
-EXPOSE 4321
-CMD ["sh", "-c", "bun run db:migrate && exec bun --cwd apps/web --bun astro dev --ignore-lock --host 0.0.0.0"]

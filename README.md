@@ -3,9 +3,7 @@
 The builder copies these standalone projects into customer workspaces:
 
 - [astro-static](astro-static/README.md): Astro static website (the per-type template for Astro Static applications).
-- [astro-functions](astro-functions/README.md): Astro website with an optional Hono API.
 - [nextjs-static](nextjs-static/README.md): Next.js static website.
-- [astro-single-vm](astro-single-vm/README.md): Astro server with embedded Hono, PostgreSQL, React islands, Tailwind 4 and a preinstalled shadcn/ui kit.
 - [nextjs-single-vm](nextjs-single-vm/README.md): Next.js server with embedded Hono, PostgreSQL, Tailwind 4 and a preinstalled shadcn/ui kit.
 
 [Playbooks](playbooks/) describe optional integrations that can be applied to the single-VM templates when requested.

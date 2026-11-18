@@ -1,6 +1,6 @@
 # Owner-editable content on a Single VM
 
-Use when the owner wants to edit content themselves. Applies to `astro-single-vm` and `nextjs-single-vm`, using their PostgreSQL database, embedded Hono API and persistent `UPLOADS_DIR`. Apply this recipe to the requested site; do not install a generic CMS in the starter.
+Use when the owner wants to edit content themselves. Applies to `nextjs-single-vm`, using their PostgreSQL database, embedded Hono API and persistent `UPLOADS_DIR`. Apply this recipe to the requested site; do not install a generic CMS in the starter.
 
 ## Bound the work
 

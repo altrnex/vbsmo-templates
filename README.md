@@ -5,6 +5,7 @@ The builder copies these standalone projects into customer workspaces:
 - [astro-static](astro-static/README.md): Astro static website (the per-type template for Astro Static applications).
 - [nextjs-static](nextjs-static/README.md): Next.js static website.
 - [nextjs-single-vm](nextjs-single-vm/README.md): Next.js server with embedded Hono, PostgreSQL, Tailwind 4 and a preinstalled shadcn/ui kit.
+- [tanstack-start-single-vm](tanstack-start-single-vm/README.md): TanStack Start (Vite, Nitro on Bun) with embedded Hono, PostgreSQL, Tailwind 4 and the same shadcn/ui kit.
 
 [Playbooks](playbooks/) describe optional integrations that can be applied to the single-VM templates when requested.
 

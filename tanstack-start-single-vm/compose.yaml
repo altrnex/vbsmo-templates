@@ -31,6 +31,7 @@ services:
     restart: unless-stopped
     environment:
       VBSMO_HOSTNAME: ${VBSMO_HOSTNAME:?Set VBSMO_HOSTNAME}
+      VBSMO_TLS: ${VBSMO_TLS:-public}
     ports:
       - "80:80"
       - "443:443"

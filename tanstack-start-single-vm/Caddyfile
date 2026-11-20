@@ -1,4 +1,20 @@
+# A refused certificate is retried at the production issuer, never at the
+# untrusted staging one (certmagic's default test CA). A name the public
+# issuer cannot serve (VBSMO_TLS=internal, the test provider's) keeps Caddy's
+# local issuer.
+(tls-public) {
+  tls {
+    issuer acme {
+      test_dir https://acme-v02.api.letsencrypt.org/directory
+    }
+  }
+}
+(tls-internal) {
+  tls internal
+}
+
 {$VBSMO_HOSTNAME} {
+  import tls-{$VBSMO_TLS}
   handle /vbsmo-images/* {
     root * /data
     file_server

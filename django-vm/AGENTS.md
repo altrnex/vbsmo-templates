@@ -18,7 +18,7 @@ Private uploads must pass through an authorized view; do not publish `/media` as
 
 Use Tailwind CSS 4 and the installed lucide-static icons. Keep styles in `assets/styles/site.css`;
 `bun run lint:fix` regenerates static CSS. Preserve Ruff, djLint and Biome checks. Never suppress a
-check to finish. Use Bun for JavaScript dependencies and tools. Python dependencies belong in
+check to finish. Use Bun for JavaScript dependencies and tools. sharp is preinstalled in the sandbox: import it in scripts, never install it. Python dependencies belong in
 `apps/web/requirements.txt`; preserve pinned maintained dependencies. Every TypeScript package needs
 `test`, `lint`, `lint:fix`, `typecheck` and a local tsconfig. Chain Hono methods if introducing Hono.
 
@@ -35,6 +35,12 @@ collects static assets. The platform supervises preview and PostgreSQL; do not s
 servers or reset preview data yourself. Explain that preview data is disposable when a workspace is
 collected or replaced. Production data is separate. Account creation/recovery uses private Django
 management commands; never seed a public/default password or first-visitor administrator.
+
+Build a multi-page site, not a single scrolling landing page. Unless the request asks for one page,
+give the home page and each main section (for example about, services or menu, prices, contacts) its
+own view, URL and template extending `base.html`, linked from a shared header navigation and footer,
+and list public pages in the sitemap. Keep the home page a concise overview that links to those pages.
+A single-page request stays one page.
 
 Build the application the customer requests, with accessible controls, correct empty/error states,
 and real database behavior. Keep project-specific handoff notes concise below after verification.

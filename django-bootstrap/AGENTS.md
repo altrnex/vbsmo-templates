@@ -99,8 +99,8 @@ file, and replace the starter state below with current facts rather than a trans
   replacing it. Style the existing `templates/404.html` with the shared layout and a link home.
 - Prefer the existing dependencies. Python dependency manifests under `apps/web` remain platform-owned. Root and
   workspace `package.json` files plus the root `bun.lock` are ordinary project source; use
-  `bun --cwd apps/web add` or `bun --cwd apps/web remove` when the requested site genuinely needs a JavaScript
-  package so they remain synchronized. Do not install, remove, or upgrade Python packages directly; the typed
+  `bun add --cwd apps/web` or `bun remove --cwd apps/web` when the requested site genuinely needs a JavaScript
+  package so they remain synchronized. sharp is preinstalled in the sandbox: import it in scripts, never install it. Do not install, remove, or upgrade Python packages directly; the typed
   `django_feature` tool is the only capability entrypoint documented above.
 - Do not start a development server, commit, push, or edit Git metadata. The platform owns the live server and
   repository lifecycle.

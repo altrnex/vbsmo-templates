@@ -2,7 +2,7 @@
   "name": "vbsmo-tanstack-start-single-vm",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "bun@1.4.4",
+  "packageManager": "bun@1.4.5",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -23,6 +23,6 @@
     "db:check": "bun apps/web/src/server/migrate.ts --check"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.6.6"
+    "@biomejs/biome": "2.6.8"
   }
 }

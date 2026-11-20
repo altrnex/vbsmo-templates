@@ -18,7 +18,15 @@ export const Route = createRootRoute({
         <HeadContent />
       </head>
       <body>
+        <header>
+          <nav aria-label="Main">
+            <Link to="/">Site name</Link> <Link to="/about">About</Link>
+          </nav>
+        </header>
         <Outlet />
+        <footer>
+          <p>Footer text</p>
+        </footer>
         <Toaster />
         <Scripts />
       </body>

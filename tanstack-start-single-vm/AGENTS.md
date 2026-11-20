@@ -18,3 +18,19 @@ PostgreSQL is the only database. Use `getDb()` from `apps/web/src/server/db.ts` 
 Keep the root lockfile synchronized when adding dependencies and pin exact versions. Verify with `bun run build` after the requested feature works. Do not start a dev server yourself: the platform previews the app.
 
 UI uses the preinstalled shadcn/ui components; read `docs/playbooks/shadcn-ui.md` before adding UI components. Colours live in `apps/web/src/styles.css` as neutral placeholders; replace them with the site's palette and fonts. Optional integrations have playbooks in `docs/playbooks`: `better-auth.md` (sign-in), `tanstack-start-i18n.md` (several languages) and `admin-content.md` (owner-editable content). Read the one the request needs before starting. The HTTP API is the Hono router in `apps/web/src/server/api.ts`, mounted by the catch-all server route `src/routes/api/$.ts`: chain Hono methods, validate with `zValidator`, export `ApiType` and call it from the browser with the typed `hc` client; compose routers with `.route()`.
+
+## File map
+
+Edit: `apps/web/src/routes/*.tsx` (one file route per page; `__root.tsx` holds the shared header, navigation, footer and default head), `apps/web/src/styles.css` (colours, fonts), `apps/web/src/components` (your own components; `components/ui` is the shadcn kit), `apps/web/src/server/api.ts` (Hono HTTP API), `apps/web/src/server/*.ts` (server-only code), `packages/db/schema.ts` (tables), `apps/web/public` (static files).
+Plumbing, no reading needed for ordinary work: `apps/web/src/router.tsx`, `start.ts`, `routeTree.gen.ts` (generated), `server/db.ts`, `server/migrate.ts`, `vite.config.ts`, `tsconfig.json`, `package.json` files, `Dockerfile*`, `Caddyfile`, `compose.yaml`, `.vbsmo.json`, `packages/db/drizzle` (generated migrations), `bun.lock`.
+
+## Site shape and starter leftovers
+
+A site on this starter is a multi-page application: its main sections are separate file routes (for example home, about, contact; the pages follow from the request), with the header, navigation and footer in `__root.tsx` and `Link` navigation between pages. Build one long page with anchor links only when the request explicitly asks for a single page.
+The home route (`routes/index.tsx`) is a Notes demo that shows the data path; the root title and description ("Your new site"), the unstyled header, navigation and footer, and `routes/about.tsx` are structural placeholders; choose the visual design, colours and fonts from the request. Replace all of them. A site with no stored data needs no table, server function or migration: add them only when the request needs stored data (a contact form that stores messages does; a plain landing or company site does not).
+
+## Page title, description, fonts, links
+
+- Head: a route's `head()` merges with the root's, and the deepest matching route wins for `title` and for each `meta` with the same `name` or `property`. Put the site-wide defaults in `__root.tsx` and give each page `head: () => ({ meta: [{ title: "Page" }, { name: "description", content: "..." }] })`. Do not repeat the title in the root and the page: the page one replaces it.
+- Fonts: choose the site's fonts yourself to fit the request. For a Fontsource variable font: `bun add --cwd apps/web --exact @fontsource-variable/<font>`, then in `apps/web/src/styles.css` add `@import "@fontsource-variable/<font>";` after the `tw-animate-css` import and set `--font-sans: "<Family> Variable", <fallbacks>;` inside `@theme inline { ... }` (same for `--font-serif` or `--font-mono`). The family name is the package name in title case plus ` Variable`; confirm it with `font-family` in the package's `index.css`. The body already uses `font-sans`.
+- Biome rejects `<a href="#">` and an `<a>` used as a button (`useValidAnchor`): use `Link` for pages, `<a href="#id">` for an in-page anchor and `<button type="button">` for menu toggles and other actions.

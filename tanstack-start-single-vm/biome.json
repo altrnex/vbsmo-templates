@@ -9,7 +9,6 @@
       "!**/.nitro",
       "!**/routeTree.gen.ts",
       "!**/paraglide",
-      "!**/out",
       "!**/.vbsmo-runtime",
       "!**/*.svg",
       "!!infra"

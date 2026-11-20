@@ -2,11 +2,8 @@ node_modules/
 .output/
 .nitro/
 .tanstack/
-out/
 .vbsmo-runtime/
 *.tsbuildinfo
 .env
 .env.*
 !.env.example
-
-**/.vbsmo-runtime/

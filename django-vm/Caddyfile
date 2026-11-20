@@ -1,4 +1,10 @@
 {$VBSMO_HOSTNAME} {
+  # A refused certificate is retried at the production issuer, never at the untrusted staging one.
+  tls {
+    issuer acme {
+      test_dir https://acme-v02.api.letsencrypt.org/directory
+    }
+  }
   handle /vbsmo-images/* {
     root * /data
     file_server

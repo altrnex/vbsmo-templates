@@ -46,7 +46,7 @@ when appropriate. Do not show framework or platform implementation details in th
 - Read existing source before editing. Preserve useful work and platform-owned
   `.vbsmo.json` fields. Never touch Git metadata or suppress lint failures.
 - Use Bun, never npm/npx/Yarn/pnpm or `bun x`. Add/remove packages with
-  `bun add --cwd apps/web` / `bun remove --cwd apps/web` so the root lockfile stays synchronized.
+  `bun add --cwd apps/web` / `bun remove --cwd apps/web` so the root lockfile stays synchronized. sharp is preinstalled in the sandbox: import it in scripts, never install it.
 - Use `project_check environment` to inspect configured variable names, never values.
   Keep secrets out of client code, HTML, logs and documentation requests. Only
   intentionally public values may be embedded in client assets.

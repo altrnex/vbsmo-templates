@@ -18,7 +18,7 @@ Private uploads must pass through an authorized view; do not publish `/media` as
 
 Use Tailwind CSS 4 and the installed lucide-static icons. Keep styles in `assets/styles/site.css`;
 `bun run lint:fix` regenerates static CSS. Preserve Ruff, djLint and Biome checks. Never suppress a
-check to finish. Use Bun for JavaScript dependencies and tools. Python dependencies belong in
+check to finish. Use Bun for JavaScript dependencies and tools. sharp is preinstalled in the sandbox: import it in scripts, never install it. Python dependencies belong in
 `apps/web/requirements.txt`; preserve pinned maintained dependencies. Every TypeScript package needs
 `test`, `lint`, `lint:fix`, `typecheck` and a local tsconfig. Chain Hono methods if introducing Hono.
 

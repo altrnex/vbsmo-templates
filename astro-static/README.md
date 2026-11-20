@@ -4,7 +4,7 @@ This is an ordinary Bun workspace with static website source in `apps/web`. Loca
 
 ## Start and change it
 
-Install Bun **1.4.4** and Node.js **24.20.0**, then run from the repository root:
+Install Bun **1.4.5** and Node.js **24.20.0**, then run from the repository root:
 
 ```sh
 bun install --frozen-lockfile

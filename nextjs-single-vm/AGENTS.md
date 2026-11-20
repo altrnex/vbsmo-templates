@@ -6,6 +6,8 @@ PostgreSQL 18 is the only database. Set `DATABASE_URL` locally and in production
 
 Read the applicable `docs/playbooks` file when the user requests an optional integration. Better Auth can use the existing embedded Hono router and database; it does not require another service. Keep the root lockfile synchronized when adding dependencies. Verify with `bun run lint`, `bun run typecheck`, `bun run test`, and `bun run build` after the requested feature works.
 
+Build a multi-page site, not a single scrolling landing page. Unless the request asks for one page, give the home page and each main section (for example about, services or menu, prices, contacts) its own App Router route under `apps/web/src/app`, linked from a shared header navigation and footer in the root layout, plus a working `not-found` page. Keep the home page a concise overview that links to those pages. A single-page request stays one page.
+
 UI uses the preinstalled shadcn/ui components; read `docs/playbooks/shadcn-ui.md` before adding UI components. The colour values in `apps/web/src/app/globals.css` are neutral placeholders; replace them with the site's chosen palette and set its fonts there.
 
 When the owner wants to edit content themselves, read `docs/playbooks/admin-content.md` for the small owner-only admin recipe.

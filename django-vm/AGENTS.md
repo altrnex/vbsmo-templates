@@ -36,6 +36,12 @@ servers or reset preview data yourself. Explain that preview data is disposable 
 collected or replaced. Production data is separate. Account creation/recovery uses private Django
 management commands; never seed a public/default password or first-visitor administrator.
 
+Build a multi-page site, not a single scrolling landing page. Unless the request asks for one page,
+give the home page and each main section (for example about, services or menu, prices, contacts) its
+own view, URL and template extending `base.html`, linked from a shared header navigation and footer,
+and list public pages in the sitemap. Keep the home page a concise overview that links to those pages.
+A single-page request stays one page.
+
 Build the application the customer requests, with accessible controls, correct empty/error states,
 and real database behavior. Keep project-specific handoff notes concise below after verification.
 

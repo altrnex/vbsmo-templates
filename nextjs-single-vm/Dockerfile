@@ -1,10 +1,10 @@
-FROM oven/bun:1.4.4 AS build
+FROM oven/bun:1.4.5 AS build
 WORKDIR /app
 COPY . .
 RUN --mount=type=secret,id=app_env,target=/run/secrets/app_env \
   mkdir -p apps/web/public && bun install --frozen-lockfile && set -a && . /run/secrets/app_env && set +a && bun run build
 
-FROM oven/bun:1.4.4
+FROM oven/bun:1.4.5
 WORKDIR /app
 COPY package.json bun.lock ./
 COPY apps/web/package.json apps/web/package.json

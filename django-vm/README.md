@@ -1,7 +1,7 @@
 # Your Django application
 
 This project runs Django and PostgreSQL. The source in `apps/web` runs locally without Vibeissimo.
-Install Bun 1.4.4, Python 3.14, uv and PostgreSQL 18. Create a private local database and role with
+Install Bun 1.4.5, Python 3.14, uv and PostgreSQL 18. Create a private local database and role with
 permission to create a test database. Export `PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`
 and a randomly generated `DJANGO_SECRET_KEY` in your terminal. Never commit their values.
 

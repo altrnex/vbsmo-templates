@@ -1,5 +1,5 @@
 FROM python:3.14-slim
-COPY --from=oven/bun:1.4.4 /usr/local/bin/bun /usr/local/bin/bun
+COPY --from=oven/bun:1.4.5 /usr/local/bin/bun /usr/local/bin/bun
 WORKDIR /app
 COPY . .
 RUN bun install --frozen-lockfile && python -m venv apps/web/.venv \

@@ -1,6 +1,6 @@
 # Next.js single-VM starter
 
-Install Bun 1.4.4 and PostgreSQL 18. Set `DATABASE_URL` for your local database, then run `bun install --frozen-lockfile`, `bun run db:migrate`, and `bun run dev`. Open http://127.0.0.1:3000. The notes API persists data in PostgreSQL.
+Install Bun 1.4.5 and PostgreSQL 18. Set `DATABASE_URL` for your local database, then run `bun install --frozen-lockfile`, `bun run db:migrate`, and `bun run dev`. Open http://127.0.0.1:3000. The notes API persists data in PostgreSQL.
 
 Run `bun run db:check` to check that the database migration history matches the source without changing data. Run `bun run build` for the standalone build. Production needs `DATABASE_URL` and the committed migrations; the image runs those migrations before starting. Database data belongs on a persistent disk outside the image. Run `bun run db:generate` after changing `packages/db/schema.ts` and commit the generated migration.
 

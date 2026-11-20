@@ -4,7 +4,7 @@ This is a static Django website in `apps/web`. Local development needs no Studio
 
 ## Install and run
 
-Install Bun **1.4.4**, Python **3.14** and uv. From the repository root:
+Install Bun **1.4.5**, Python **3.14** and uv. From the repository root:
 
 ```sh
 bun install --frozen-lockfile

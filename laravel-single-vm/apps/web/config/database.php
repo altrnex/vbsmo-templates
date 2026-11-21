@@ -1,8 +1,9 @@
 <?php
 
-// The preview platform describes its PostgreSQL in a JSON file (unix socket, role, signing key); a deployment sets DB_URL.
-$previewFile = env('VBSMO_PREVIEW_DATABASE_FILE');
-$preview = is_string($previewFile) && is_file($previewFile)
+// The preview platform describes its PostgreSQL in a JSON file (unix socket, role, signing key), found through the
+// environment or, for an artisan command run in the workspace, beside the repository; a deployment sets DB_URL.
+$previewFile = env('VBSMO_PREVIEW_DATABASE_FILE') ?: dirname(__DIR__, 3).'/.vbsmo-runtime/config/vm-preview.json';
+$preview = is_file($previewFile)
     ? json_decode((string) file_get_contents($previewFile), true, flags: JSON_THROW_ON_ERROR)
     : [];
 

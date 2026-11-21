@@ -22,7 +22,7 @@ Platform:
 
 Quality (run after the requested feature works, and fix everything they report): `project_check` with `verify` runs Pint and `vp check` (oxlint and oxfmt; `vp check --fix` formats), the build, `vue-tsc` and Larastan (level 7, `phpstan.neon`), then PHPUnit (`vendor/bin/phpunit`, not `php artisan test`, which warns when `.env` is missing; the tests render pages through the build). Add a feature test in `tests/Feature` for every route you add. The checks must print nothing.
 
-UI uses the installed shadcn-vue components in `apps/web/resources/js/components/ui` (reka-ui) and the icons of `@lucide/vue`; read `docs/playbooks/shadcn-ui.md` before adding components. Build pages and sections from these components, and from the kit's layouts in `resources/js/layouts`. Colours live in `apps/web/resources/css/app.css` as neutral placeholders; replace them with the site's palette and fonts. Dark mode is the kit's appearance switch (`useAppearance`, `/settings/appearance`).
+UI uses the installed shadcn-vue components in `apps/web/resources/js/components/ui` (reka-ui) and the icons of `@lucide/vue`; read `docs/playbooks/shadcn-ui.md` before adding components. Build pages and sections from these components, and from the kit's layouts in `resources/js/layouts`. Colours live in `apps/web/resources/css/app.css` as neutral placeholders; replace them with the site's palette. Fonts: the page uses the system sans-serif stack; a chosen font comes from font files committed in the project through `local()` from `laravel-vite-plugin/fonts` in `vite.config.ts` (the build has no network, so no remote font provider). Dark mode is the kit's appearance switch (`useAppearance`, `/settings/appearance`).
 
 ## File map
 

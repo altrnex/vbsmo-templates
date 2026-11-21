@@ -1,0 +1,11 @@
+node_modules
+**/node_modules
+**/vendor
+**/.vbsmo-runtime
+**/public/build
+**/storage/logs
+**/storage/framework
+.git
+.env
+.env.*
+.secrets

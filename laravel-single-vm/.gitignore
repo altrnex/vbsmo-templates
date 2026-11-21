@@ -1,0 +1,6 @@
+node_modules/
+.vbsmo-runtime/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example

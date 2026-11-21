@@ -45,7 +45,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => $uploads.'/public',
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
+            'url' => rtrim((string) env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,

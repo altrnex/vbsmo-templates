@@ -1,0 +1,14 @@
+{
+  "schema": "vbsmo-application/v1",
+  "layout": "vibeissimo-bun-workspace-v1",
+  "framework": "laravel",
+  "webRoot": "apps/web",
+  "projectType": "single-vm",
+  "capabilities": {
+    "vm": {
+      "runtime": "php8.5",
+      "database": "postgresql18",
+      "environment": []
+    }
+  }
+}

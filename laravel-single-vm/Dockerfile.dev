@@ -1,0 +1,9 @@
+FROM dunglas/frankenphp:1.12-php8.5-trixie
+RUN install-php-extensions pdo_pgsql intl bcmath zip
+COPY --from=oven/bun:1.4.5 /usr/local/bin/bun /usr/local/bin/bun
+COPY --from=composer:2.11.2 /usr/bin/composer /usr/bin/composer
+WORKDIR /app
+COPY . .
+RUN bun install --frozen-lockfile && cd apps/web && composer install --no-interaction
+EXPOSE 3000
+CMD ["sh", "-c", "cd apps/web && php artisan migrate --force && (bun ./node_modules/vite/bin/vite.js build --watch &) && exec php artisan serve --host 0.0.0.0 --port 3000"]

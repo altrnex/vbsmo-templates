@@ -1,5 +1,9 @@
 <?php
 
+// Persistent files live in the kept uploads directory: UPLOADS_DIR is /data/uploads in production and the workspace
+// state in the preview. Both disks and the public link point into it.
+$uploads = env('UPLOADS_DIR', storage_path('app'));
+
 return [
 
     /*
@@ -32,7 +36,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app/private'),
+            'root' => $uploads.'/private',
             'serve' => true,
             'throw' => false,
             'report' => false,
@@ -40,7 +44,7 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => env('UPLOADS_DIR', storage_path('app/public')),
+            'root' => $uploads.'/public',
             'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
             'throw' => false,
@@ -74,7 +78,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => $uploads.'/public',
     ],
 
 ];

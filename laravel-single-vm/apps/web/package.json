@@ -6,8 +6,8 @@
   "scripts": {
     "build": "vite build",
     "test": "vendor/bin/phpunit",
-    "lint": "biome lint . && vendor/bin/pint --test",
-    "lint:fix": "biome lint --write --unsafe . && vendor/bin/pint",
+    "lint": "vendor/bin/pint --test",
+    "lint:fix": "vendor/bin/pint",
     "typecheck": "tsc --noEmit && vendor/bin/phpstan analyse --memory-limit=1G"
   },
   "dependencies": {

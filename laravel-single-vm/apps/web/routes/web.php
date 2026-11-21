@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [NoteController::class, 'index'])->name('home');
-Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
+Route::inertia('/', 'Welcome')->name('home');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::inertia('dashboard', 'Dashboard')->name('dashboard');
+});
+
+require __DIR__.'/settings.php';

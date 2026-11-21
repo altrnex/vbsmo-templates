@@ -11,6 +11,7 @@
       "!**/paraglide",
       "!**/.vbsmo-runtime",
       "!**/*.svg",
+      "!apps/web/resources/js",
       "!!infra"
     ]
   },

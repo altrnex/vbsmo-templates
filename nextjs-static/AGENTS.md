@@ -54,5 +54,4 @@ when appropriate. Do not show framework or platform implementation details in th
   local tsconfig. Always chain Hono methods if composing a Hono app or example.
 - Finish with `project_check verify`. Never start servers, commit or push; the
   platform handles these operations. Do not weaken checks to make verification pass.
-
-- `dangerouslySetInnerHTML` is allowed only for content the site itself generates (for example JSON-LD via `JSON.stringify(data).replace(/</g, '\\u003c')`), never for user input.
+- `dangerouslySetInnerHTML` is allowed only for content the site itself generates (for example JSON-LD via `JSON.stringify(data).replace(/</g, '\\u003c')`), never for user input; never add a `biome-ignore` for it.

@@ -12,4 +12,4 @@ UI uses the preinstalled shadcn/ui components; read `docs/playbooks/shadcn-ui.md
 
 When the owner wants to edit content themselves, read `docs/playbooks/admin-content.md` for the small owner-only admin recipe.
 
-- `dangerouslySetInnerHTML` is allowed only for content the site itself generates (for example JSON-LD via `JSON.stringify(data).replace(/</g, '\\u003c')`), never for user input.
+Use `dangerouslySetInnerHTML` only for content the site itself generates (for example JSON-LD via `JSON.stringify(data).replace(/</g, '\\u003c')`), never for user input; never add a `biome-ignore` for it.

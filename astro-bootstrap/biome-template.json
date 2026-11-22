@@ -30,6 +30,9 @@
     "enabled": true,
     "rules": {
       "preset": "recommended",
+      "style": {
+        "noDescendingSpecificity": "off"
+      },
       "suspicious": {
         "noUnknownAtRules": "off"
       }

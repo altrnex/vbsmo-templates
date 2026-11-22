@@ -19,6 +19,9 @@
     "enabled": true,
     "rules": {
       "preset": "recommended",
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
       "style": {
         "noDescendingSpecificity": "off"
       }

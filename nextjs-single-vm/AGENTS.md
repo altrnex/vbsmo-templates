@@ -11,3 +11,5 @@ Build a multi-page site, not a single scrolling landing page. Unless the request
 UI uses the preinstalled shadcn/ui components; read `docs/playbooks/shadcn-ui.md` before adding UI components. The colour values in `apps/web/src/app/globals.css` are neutral placeholders; replace them with the site's chosen palette and set its fonts there.
 
 When the owner wants to edit content themselves, read `docs/playbooks/admin-content.md` for the small owner-only admin recipe.
+
+Use `dangerouslySetInnerHTML` only for content the site itself generates (for example JSON-LD via `JSON.stringify(data).replace(/</g, '\\u003c')`), never for user input; never add a `biome-ignore` for it.

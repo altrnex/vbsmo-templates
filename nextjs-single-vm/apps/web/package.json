@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun --bun next dev",
-    "build": "bun --bun next build",
+    "dev": "next dev",
+    "build": "next build",
     "test": "bun test --pass-with-no-tests",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write --unsafe .",

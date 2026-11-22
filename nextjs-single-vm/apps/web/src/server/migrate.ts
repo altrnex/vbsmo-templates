@@ -1,6 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { sql } from "drizzle-orm";
-import { migrate } from "drizzle-orm/bun-sql/migrator";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
 import { readMigrationFiles } from "drizzle-orm/migrator";
 import { closeDb, getDb } from "./db.ts";
 

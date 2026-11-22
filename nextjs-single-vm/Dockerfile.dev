@@ -1,6 +1,7 @@
 FROM oven/bun:1.4.5
+COPY --from=node:24-slim /usr/local/bin/node /usr/local/bin/node
 WORKDIR /app
 COPY . .
 RUN bun install --frozen-lockfile
 EXPOSE 3000
-CMD ["sh", "-c", "bun run db:migrate && cd apps/web && exec bun ./node_modules/next/dist/bin/next dev --hostname 0.0.0.0"]
+CMD ["sh", "-c", "bun run db:migrate && cd apps/web && exec node ./node_modules/next/dist/bin/next dev --hostname 0.0.0.0"]

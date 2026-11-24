@@ -8,6 +8,9 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
+  // Off in the Studio preview; set to true to use the toolbar while developing.
+  devToolbar: { enabled: false },
+
   vite: {
     plugins: [tailwindcss()],
   },

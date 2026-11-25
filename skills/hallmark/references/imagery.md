@@ -8,9 +8,8 @@ In order, the first that fits:
 
 1. **The user's own images and recordings**, asked for at Step 1. They win every slot.
 2. **Screenshots of the real product,** supplied by the user (§ 4).
-3. **The product built,** only when there is no product to capture yet (§ 4).
+3. **The product built,** when the user has supplied no product images (§ 4).
 4. **Photographs from the library**, picked by script and treated in the theme's way (§ 2, § 5).
-5. **Generated stills**, only when `TOGETHER_API_KEY` is set and the user asked for them (§ 6).
 6. **Type at full scale**, when the prompt is about words.
 
 Which prompts want which:

@@ -4,7 +4,7 @@ Loaded for an unusual layout. No desktop-only interactions; every page renders w
 
 ## What the script checks and what it cannot
 
-sloplint covers the mechanical half at 320, 375, 414, 768, 1024, 1280, 1440 and 1920: horizontal scroll and `overflow-x: clip` (34), wrapping controls (49), image tracks and display heads (50), radio tabs (53), stacked sticky elements (56). Check by eye at each width what it cannot see: every desktop sidebar or filter column collapses into a menu or a disclosure, section heads stack to one column, and a per-theme override carries its own mobile rule.
+Review the source or available DOM and responsive styles for overflow (34), wrapping controls (49), image tracks and headings (50), radio tabs (53), and stacked sticky elements (56).
 
 ## Breakpoints
 

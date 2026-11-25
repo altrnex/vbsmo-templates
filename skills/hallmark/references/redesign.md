@@ -1,6 +1,6 @@
 # Redesign
 
-Loaded only when the user names Hallmark with `redesign` or `audit` (`/hallmark redesign <target>`, *redesign the site with Hallmark*). A request that changes an existing design without naming Hallmark (a restyle, new colours or a new theme, a polish, a redesign, a small edit) never loads this file: it is done as asked, in the project's own system. A redesign is a build whose material is the page that exists: SKILL.md still binds, and this file says what the run keeps, what replaces the Step 1 ask and what the sweep adds. The target is the user's own code (a file, a folder, a route on a dev server); a live URL with no source behind it can only be audited, through `--url`.
+Loaded only when the user names Hallmark with `redesign` or `audit` (`/hallmark redesign <target>`, *redesign the site with Hallmark*). A request that changes an existing design without naming Hallmark (a restyle, new colours or a new theme, a polish, a redesign, a small edit) never loads this file: it is done as asked, in the project's own system. A redesign is a build whose material is the page that exists: SKILL.md still binds, and this file says what the run keeps, what replaces the Step 1 ask and what the sweep adds. The target is the user's own code (a file or folder).
 
 ## What a redesign keeps
 
@@ -35,9 +35,9 @@ The depths do not blend: a polish that finds the concept wrong says so and recom
 node <skill-dir>/scripts/sloplint.mjs <target> --genre <genre> --before [--scope app]
 ```
 
-It prints the findings grouped by gate and writes them to `.hallmark/before.txt`, and the record to `.hallmark/before.json`: every link, form, field, inline handler, test hook, script tag, selector a script queries, heading and figure. Git ignores the folder's screenshots and records.
+It prints the findings grouped by gate and writes them to `.hallmark/before.txt`, and the record to `.hallmark/before.json`: every link, form, field, inline handler, test hook, script tag, selector a script queries, heading and figure. Git ignores the folder's records.
 
-3. Inspect the project and any supplied screenshots before you weigh the findings, so the linter does not write the verdict, then give the read in four lines: what the page is for (the audience, the one action); what works and stays (at least one thing); what reads as generated (the worst tells, by gate); what is broken.
+3. Inspect the source or available DOM before you weigh the findings, so the linter does not write the verdict, then give the read in four lines: what the page is for (the audience, the one action); what works and stays (at least one thing); what reads as generated (the worst tells, by gate); what is broken.
 
 **`audit <target>` stops here.** It loads `gates.md` § 1, § 4 and § 5, walks the judged gates from the available evidence, and reports the findings by tier with `file:line`, the read, the lightest depth that settles them and what only a deeper one would. It changes none of the project's files.
 
@@ -70,9 +70,9 @@ Then the build rows the depth reaches: Theme at restyle and full (dealt, `brand`
 
 ## After
 
-1. The sweep, against the record: `sloplint <target> --genre <genre> --kept`. Anything the page had and no longer has is a `FAIL kept` (a link, a form, a field, a handler, a test hook, a script, a selector a script still queries) or a `WARN kept` (a heading, a figure, an image, an id). Restore it, or put it on the record in the stamp: `/* Hallmark · dropped /blog, #team · the user is retiring the blog and the team section */`, or for a line a copy gate named, `/* Hallmark · reworded "Built for modern teams" to "Out of your way" · 19 names the opener */`, or `dropped "<the line>" · 69 names it` for a line a gate cuts whole.
+1. The sweep, against the record: `node <skill-dir>/scripts/sloplint.mjs <target> --genre <genre> --kept`. Anything the page had and no longer has is a `FAIL kept` (a link, a form, a field, a handler, a test hook, a script, a selector a script still queries) or a `WARN kept` (a heading, a figure, an image, an id). Restore it, or put it on the record in the stamp: `/* Hallmark · dropped /blog, #team · the user is retiring the blog and the team section */`, or for a line a copy gate named, `/* Hallmark · reworded "Built for modern teams" to "Out of your way" · 19 names the opener */`, or `dropped "<the line>" · 69 names it` for a line a gate cuts whole.
 2. The project's own checks, where it has them: the type check, the build, the tests. A redesign that breaks one is not finished.
-3. The finish review also takes the `before` screenshots and answers what the old page did better (`review-finish.md`). A polish hands it only the full pages at 1440, before and after, and takes at most five findings. A finding that is a plain defect (a misalignment, a broken glyph, a label that lies) is fixed at any depth; one that asks for a new composition joins the layout findings; one that asks for content the page never had goes to the owner in the handoff.
+3. The finish review also takes the `before` record and answers what the old page did better (`review-finish.md`). A polish hands it only the relevant source or DOM changes, and takes at most five findings. A finding that is a plain defect (a misalignment, a broken glyph, a label that lies) is fixed at any depth; one that asks for a new composition joins the layout findings; one that asks for content the page never had goes to the owner in the handoff.
 4. The log entry carries `mode: redesign`, `depth` and `scope` (page, site or app), plus the build's fields at full depth.
 5. The handoff, ahead of the material ask; where the layout stayed it adds a Layout row (the findings only a full redesign would settle):
 

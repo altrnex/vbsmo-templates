@@ -23,7 +23,7 @@ for (let i = 0; i < args.length; i++) {
 }
 function usage() {
   console.error('usage: node sloplint.mjs <file-or-dir ...> [--genre editorial|modern-minimal|atmospheric|playful] [--scope page|component|app] [--stage hero|page] [--json] [--tier floor] [--before | --kept]');
-  console.error('--before records what the target says and does (.hallmark/before.json, screenshots in .hallmark/before); --kept checks a redesign against that record');
+  console.error('--before records what the target says and does (.hallmark/before.json); --kept checks a redesign against that record');
   console.error('reads .html and .css, plus .jsx .tsx .vue .svelte .astro (Tailwind class strings, cn/clsx/cva calls); skips node_modules, dist, build, coverage and dot folders');
 }
 if (!opts.paths.length) { usage(); process.exit(2); }
@@ -2050,13 +2050,13 @@ function check47(ctx) {
         if (t.close) continue;
         const cls = getAttr(t.attrs, 'class');
         const m = cls ? re.exec(cls) : null;
-        if (m) { report(gate, 'FAIL', doc.file, t.line, `re-drawn chrome class "${m[0]}" (class="${trunc(cls, 32)}")`, 'Use a real screenshot in a figure'); break; }
+        if (m) { report(gate, 'FAIL', doc.file, t.line, `re-drawn chrome class "${m[0]}" (class="${trunc(cls, 32)}")`, 'Use a supplied product image in a figure or remove the chrome'); break; }
       }
     }
     for (const r of ctx.rules) {
       const m = re.exec(r.selector);
       if (m) {
-        report(gate, 'FAIL', r.file, r.line, `re-drawn chrome selector ${r.selector}`, 'Use a real screenshot in a figure');
+        report(gate, 'FAIL', r.file, r.line, `re-drawn chrome selector ${r.selector}`, 'Use a supplied product image in a figure or remove the chrome');
         break;
       }
     }
@@ -4216,7 +4216,7 @@ if (opts.kept) {
   let was = null;
   try { was = JSON.parse(readFileSync(SNAP, 'utf8')); } catch {}
   WAIVED = new Set(); ANSWERED = new Set(); DISMISSED = new Set(); VERBATIM = false; APPSCREEN = false; LAYOUT_KEPT = false;
-  if (!was) report('kept', 'FAIL', SNAP, 1, 'no before record here; --kept has nothing to compare against', 'Run sloplint with --before from this folder before the redesign starts');
+  if (!was) report('kept', 'FAIL', SNAP, 1, 'no before record here; --kept has nothing to compare against', 'Run node <skill-dir>/scripts/sloplint.mjs <target> --before from this folder before the redesign starts');
   else {
     const now = takeInventory();
     const outside = Object.keys(was.files || {}).filter((f) => !(f in now.files) && existsSync(resolve(f)));

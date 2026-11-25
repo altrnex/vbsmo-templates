@@ -101,4 +101,4 @@ The first screen at 1440 x 900 and 1920 x 1080, and only the first screen (44c).
 
 ## 8. Before shipping
 
-Scroll the page at 1440 x 900 one screen at a time: is something on each screen big enough to be its reason? A screen holding only a heading and a line wants a bigger visual, the line set as a statement, or two sections merged. Then squint: with the words blurred, each section still has a shape and the page a rhythm of heavy and light. The render tier measures width (77), head scale (78), the hero's foot (79) and the photo share (83); the eye judges the rest.
+Inspect sections in order in the source or DOM: is something on each screen big enough to be its reason? A screen holding only a heading and a line wants a bigger visual, the line set as a statement, or two sections merged.

@@ -2,7 +2,7 @@
 
 What a page is built around, by the visitor's job. Read the one job the prompt names at Step 2, before the shape: it sets where the action lives, which sections are the category's own, and how the page ends. The theme dresses this anatomy; the shape orders it; neither replaces it. Drawn from the homepages of about fifty real independent sites across these jobs; the pattern Hallmark slipped into (text beside a picture, a figure row, three steps, an email band) is how software pages look and almost nothing else.
 
-**When the prompt gives none of a section's content,** build it as a sample the user replaces, the way the product is built when it cannot be captured (`imagery.md` § 4): an example issue with its parts, dishes typical of the cuisine, three candles named plainly, track titles as placeholders, each marked in the handoff. A sample shows the shape of the real thing; it never states a fact a visitor could take as true (a price, a date, a person's name, a count, a review). A section whose whole content would be facts nobody gave (a lineup, a tour) is one line and a text slot, or it waits. Practical facts the job wants and the prompt lacks (hours, an address, dates) share the page's two missing-fact slots (`craft.md` § 8): slot the two a visitor needs to act.
+**When the prompt gives none of a section's content,** build it as a sample the user replaces, the way the product is built when the user supplies no product images (`imagery.md` § 4): an example issue with its parts, dishes typical of the cuisine, three candles named plainly, track titles as placeholders, each marked in the handoff. A sample shows the shape of the real thing; it never states a fact a visitor could take as true (a price, a date, a person's name, a count, a review). A section whose whole content would be facts nobody gave (a lineup, a tour) is one line and a text slot, or it waits. Practical facts the job wants and the prompt lacks (hours, an address, dates) share the page's two missing-fact slots (`craft.md` § 8): slot the two a visitor needs to act.
 
 Every job: the nav carries the job's own action word (Book, Tickets, Shop, Listen, Start free), the hero shows the thing itself (the room, the cover, the dates, the screen), and proof comes in the category's own form, never a generic band of numbers.
 
@@ -39,13 +39,13 @@ Every job: the nav carries the job's own action word (Book, Tickets, Shop, Liste
 ## try (an app, a game, a desktop tool)
 
 - **Action:** the store or download buttons right under the head, one per platform the prompt names.
-- **Sections:** the key art, trailer or main screen captured from the product (`imagery.md` § 4); features as named moments shown in screens (a Pinned run or a Switcher), not icon tiles; a before and after where the product changes something; platforms.
+- **Sections:** the key art, trailer or supplied image of the main screen (`imagery.md` § 4); features as named moments shown in screens (a Pinned run or a Switcher), not icon tiles; a before and after where the product changes something; platforms.
 - **Ends:** the download again beside one last screen. Games are short: five or six blocks is a full page.
 
 ## sign up (software, an API, a developer tool)
 
 - **Action:** start free in the nav and the hero with its terms in one line under it; for a developer tool the install command may be the action.
-- **Sections:** the product at work (captured or built); what it does as named moments; a code sample or the integration; the pricing table with its period switch; questions.
+- **Sections:** the product at work (supplied image or built sample); what it does as named moments; a code sample or the integration; the pricing table with its period switch; questions.
 - **Ends:** the hero's action again in a short band, or the code sample. Never a newsletter.
 
 ## hire (a studio, a freelancer, an architect)

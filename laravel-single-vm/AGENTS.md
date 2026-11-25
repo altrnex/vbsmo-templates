@@ -8,6 +8,8 @@ Laravel 13 structure:
 - Use Eloquent models and Form Requests (`make:request`) and named routes. Read configuration only through `config()`; call `env()` only inside `config/`.
 - Sign-in is Laravel Fortify (`config/fortify.php`, `app/Providers/FortifyServiceProvider.php`), already wired to the kit's pages: `/login`, `/register`, `/logout`, `/dashboard` and `/settings/*` work. Do not install another starter kit, Breeze, Jetstream, Sanctum or Socialite, and do not write your own login.
 
+Read `docs/playbooks/fortify-auth.md` for sign-in features or restricted pages, `docs/playbooks/laravel-i18n.md` for a multilingual site, and `docs/playbooks/admin-content.md` for an admin area that manages public content.
+
 Inertia 3 with Vue:
 - A controller returns `Inertia::render('Page', [...])` (or a route uses `Route::inertia('path', 'Page')`); pages are Vue single-file components (`<script setup lang="ts">`) in `resources/js/pages` (`Dashboard.vue` renders `Dashboard`, `settings/Profile.vue` renders `settings/Profile`). Shared props are set in `app/Http/Middleware/HandleInertiaRequests.php`; the layout of a page is chosen in `resources/js/app.ts`.
 - Link and submit through Inertia: `<Link>`, `<Form>` and `useForm` from `@inertiajs/vue3`, which send the CSRF token and show validation errors. Never write `fetch` or `axios` calls for forms and do not add a separate JSON API.

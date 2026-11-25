@@ -15,6 +15,86 @@
         "tanstack-start-single-vm",
         "laravel-single-vm"
       ]
+    },
+    {
+      "name": "frontend-design",
+      "version": "1",
+      "licence": "Apache-2.0",
+      "source": "https://github.com/anthropics/skills/tree/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/frontend-design",
+      "projectTypes": [
+        "astro-static",
+        "html-static",
+        "nextjs-static",
+        "django-static",
+        "nextjs-single-vm",
+        "django-single-vm",
+        "tanstack-start-single-vm",
+        "laravel-single-vm"
+      ]
+    },
+    {
+      "name": "redesign",
+      "version": "1",
+      "licence": "Apache-2.0",
+      "source": "https://github.com/pbakaus/impeccable/tree/9e460a87ef338ee9d12c7beed8fedc597a5af5f7/skill/reference",
+      "projectTypes": [
+        "astro-static",
+        "html-static",
+        "nextjs-static",
+        "django-static",
+        "nextjs-single-vm",
+        "django-single-vm",
+        "tanstack-start-single-vm",
+        "laravel-single-vm"
+      ]
+    },
+    {
+      "name": "motion",
+      "version": "1",
+      "licence": "MIT",
+      "source": "https://github.com/emilkowalski/skills/tree/64eb3deb9a5fbfa041faf783e0bc3fd635872e9c",
+      "projectTypes": [
+        "astro-static",
+        "html-static",
+        "nextjs-static",
+        "django-static",
+        "nextjs-single-vm",
+        "django-single-vm",
+        "tanstack-start-single-vm",
+        "laravel-single-vm"
+      ]
+    },
+    {
+      "name": "accessibility",
+      "version": "1",
+      "licence": "MIT",
+      "source": "https://github.com/jakubkrehel/skills/tree/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/skills/better-accessibility",
+      "projectTypes": [
+        "astro-static",
+        "html-static",
+        "nextjs-static",
+        "django-static",
+        "nextjs-single-vm",
+        "django-single-vm",
+        "tanstack-start-single-vm",
+        "laravel-single-vm"
+      ]
+    },
+    {
+      "name": "legal-pages",
+      "version": "1",
+      "licence": "MIT",
+      "source": "https://github.com/phuryn/pm-skills/tree/9af7bfd0bc47fdad43c2eaa7a43cd13918e7aaef/pm-toolkit/skills/privacy-policy",
+      "projectTypes": [
+        "astro-static",
+        "html-static",
+        "nextjs-static",
+        "django-static",
+        "nextjs-single-vm",
+        "django-single-vm",
+        "tanstack-start-single-vm",
+        "laravel-single-vm"
+      ]
     }
   ]
 }

@@ -9,7 +9,8 @@
       "!**/out",
       "!**/.vbsmo-runtime",
       "!**/*.svg",
-      "!!infra"
+      "!!infra",
+      "!!.agents"
     ]
   },
   "formatter": {

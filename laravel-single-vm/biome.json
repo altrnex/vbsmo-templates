@@ -12,7 +12,8 @@
       "!**/.vbsmo-runtime",
       "!**/*.svg",
       "!apps/web/resources/js",
-      "!!infra"
+      "!!infra",
+      "!!.agents"
     ]
   },
   "formatter": {

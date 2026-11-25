@@ -16,7 +16,8 @@
       "!**/*.svg",
       "!**/static/css/site.css",
       "!**/staticfiles",
-      "!!infra"
+      "!!infra",
+      "!!.agents"
     ]
   },
   "formatter": {

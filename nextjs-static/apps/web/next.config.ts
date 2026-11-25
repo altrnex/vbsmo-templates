@@ -15,12 +15,14 @@ const skipped = new Set([
   "next-env.d.ts",
 ]);
 
-/** The application's source files (outside the platform's `infra/`), sorted. */
+/** The application's source files (outside the platform's `infra/` and the installed skills in `.agents/`), sorted. */
 function sourceFiles(directory: string): string[] {
   return readdirSync(root + directory, { withFileTypes: true })
     .filter(
       ({ name }) =>
-        !skipped.has(name) && !name.endsWith(".tsbuildinfo") && `${directory}${name}` !== "infra",
+        !skipped.has(name) &&
+        !name.endsWith(".tsbuildinfo") &&
+        !["infra", ".agents"].includes(`${directory}${name}`),
     )
     .sort((a, b) => (a.name < b.name ? -1 : 1))
     .flatMap((entry) => {

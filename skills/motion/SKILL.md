@@ -530,13 +530,17 @@ element.style.transform = `translateY(${distance}px)`;
 Only when the project already uses Motion: whether its shorthand properties (`x`, `y`, `scale`, `rotate`) are hardware-accelerated depends on the installed version. When an animation must stay smooth under load, use the full `transform` string, which is accelerated in the installed version:
 
 ```jsx
-// reduce: from useReducedMotion(); no movement under reduced motion
+// reduce: from useReducedMotion(); under reduced motion the static state applies at once
+const instant = reduce ? { duration: 0 } : undefined;
 
 // Shorthand: may run on the main thread, depending on the version
-<motion.div animate={{ x: reduce ? 0 : 100 }} />
+<motion.div animate={{ x: reduce ? 0 : 100 }} transition={instant} />
 
 // Full transform string: stays smooth even when the main thread is busy
-<motion.div animate={{ transform: reduce ? 'none' : 'translateX(100px)' }} />
+<motion.div
+  animate={{ transform: reduce ? 'none' : 'translateX(100px)' }}
+  transition={instant}
+/>
 ```
 
 Some Motion animations still run on the main thread in every version: layout animations (`layout`, `layoutId`), animations with `onUpdate` or `transformTemplate`, inertia (drag momentum), and values driven every frame by a motion value (drag, `useTransform`).
@@ -552,14 +556,17 @@ CSS animations of `transform` and `opacity` run on the compositor, off the main 
 The Web Animations API gives you JavaScript control with CSS performance. Hardware-accelerated, interruptible, and no library needed.
 
 ```js
-element.animate(
-  [{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0 0)' }],
-  {
-    duration: 1000,
-    fill: 'forwards',
-    easing: 'cubic-bezier(0.77, 0, 0.175, 1)',
-  },
-);
+// Under reduced motion, skip the animation; the content stays fully visible
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  element.animate(
+    [{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0 0)' }],
+    {
+      duration: 1000,
+      fill: 'forwards',
+      easing: 'cubic-bezier(0.77, 0, 0.175, 1)',
+    },
+  );
+}
 ```
 
 ## Accessibility

@@ -103,8 +103,11 @@ Reliably accelerated: `transform` and `opacity`. Gaining support: `filter`, `cli
 When the project already uses Motion: it hands `opacity`, `transform`, `clip-path` and `filter` to WAAPI, so they can be accelerated. Whether the `x`, `y`, `scale`, `rotate` shorthands are accelerated depends on the installed version, so when the animation has to survive a busy main thread, use the full `transform` string:
 
 ```jsx
-// reduce: from useReducedMotion(); no movement under reduced motion
-<motion.div animate={{ transform: reduce ? 'none' : 'translateX(100px)' }} />
+// reduce: from useReducedMotion(); under reduced motion the static state applies at once
+<motion.div
+  animate={{ transform: reduce ? 'none' : 'translateX(100px)' }}
+  transition={reduce ? { duration: 0 } : undefined}
+/>
 ```
 
 These stay on the main thread: layout animations (`layout`, `layoutId`), `onUpdate`, `transformTemplate`, inertia, and values driven every frame by a motion value (drag, `useTransform`).

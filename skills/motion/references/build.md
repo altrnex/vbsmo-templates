@@ -76,8 +76,11 @@ If the task needs a _component_ rather than an animation — a toast, a drawer, 
 - **When the project uses Motion, use the full `transform` string for the installed version** when the animation must stay smooth under load; whether the `x`/`y`/`scale`/`rotate` shorthands are accelerated depends on the version.
 
 ```jsx
-// reduce: from useReducedMotion(); no movement under reduced motion
-<motion.div animate={{ transform: reduce ? 'none' : 'translateX(100px)' }} />
+// reduce: from useReducedMotion(); under reduced motion the static state applies at once
+<motion.div
+  animate={{ transform: reduce ? 'none' : 'translateX(100px)' }}
+  transition={reduce ? { duration: 0 } : undefined}
+/>
 ```
 
 - **Never drive a child's transform from a CSS variable on the parent** — it recalculates styles for every child. Set `transform` on the element directly.

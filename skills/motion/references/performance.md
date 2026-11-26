@@ -103,7 +103,8 @@ Reliably accelerated: `transform` and `opacity`. Gaining support: `filter`, `cli
 When the project already uses Motion: it hands `opacity`, `transform`, `clip-path` and `filter` to WAAPI, so they can be accelerated. Whether the `x`, `y`, `scale`, `rotate` shorthands are accelerated depends on the installed version, so when the animation has to survive a busy main thread, use the full `transform` string:
 
 ```jsx
-<motion.div animate={{ transform: 'translateX(100px)' }} />
+// reduce: from useReducedMotion(); no movement under reduced motion
+<motion.div animate={{ transform: reduce ? 'none' : 'translateX(100px)' }} />
 ```
 
 These stay on the main thread: layout animations (`layout`, `layoutId`), `onUpdate`, `transformTemplate`, inertia, and values driven every frame by a motion value (drag, `useTransform`).
@@ -118,7 +119,7 @@ Animation libraries animate outside React's render cycle, so they're fine. The t
 // Drops frames: one re-render per frame
 setY(nextY);
 
-// Smooth: no re-render
+// Smooth: no re-render (the loop runs only when reduced motion is not requested)
 ref.current.style.transform = `translateY(${nextY}px)`;
 // or with a motion value, when the project uses Motion: y.set(nextY)
 ```

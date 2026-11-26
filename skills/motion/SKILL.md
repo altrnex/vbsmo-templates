@@ -138,9 +138,10 @@ Tying visual changes directly to mouse position feels artificial because it lack
 import { useSpring, useTransform } from 'motion/react';
 
 // mouseX is a motion value (useMotionValue), updated on pointermove
+// reduce: from useReducedMotion(); skip the effect under reduced motion
 
 // Without spring: feels artificial, instant
-const rotation = useTransform(mouseX, (x) => x * 0.1);
+const rotation = useTransform(mouseX, (x) => (reduce ? 0 : x * 0.1));
 
 // With spring: feels natural, has momentum
 const springRotation = useSpring(rotation, {
@@ -205,8 +206,13 @@ Start from `scale(0.9)` or higher, combined with opacity. Even a barely-visible 
 
 /* Good */
 .entering {
-  transform: scale(0.95);
   opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .entering {
+    transform: scale(0.95);
+  }
 }
 ```
 
@@ -356,14 +362,17 @@ requestAnimationFrame(() => element.setAttribute('data-mounted', ''));
 Percentage values in `translate()` are relative to the element's own size. Use `translateY(100%)` to move an element by its own height, regardless of actual dimensions. This is how toasts are positioned and drawers hidden before they animate in.
 
 ```css
-/* Works regardless of drawer height */
+/* Works regardless of drawer height. A static hidden position, not motion:
+   only the transition that moves it goes inside the no-preference guard. */
 .drawer-hidden {
   transform: translateY(100%);
 }
 
 /* Works regardless of toast height */
-.toast-enter {
-  transform: translateY(-100%);
+@media (prefers-reduced-motion: no-preference) {
+  .toast-enter {
+    transform: translateY(-100%);
+  }
 }
 ```
 
@@ -382,10 +391,11 @@ Unlike `width`/`height`, `scale()` also scales an element's children. When scali
   transform-style: preserve-3d;
 }
 
-/* Run the orbit only when motion is allowed */
+/* Run the orbit only when motion is allowed, and stop within 5 seconds;
+   anything that loops longer needs a visible pause control */
 @media (prefers-reduced-motion: no-preference) {
   .orbiter {
-    animation: orbit 8s linear infinite;
+    animation: orbit 2s var(--ease-in-out) 2;
   }
 }
 
@@ -520,11 +530,13 @@ element.style.transform = `translateY(${distance}px)`;
 Only when the project already uses Motion: whether its shorthand properties (`x`, `y`, `scale`, `rotate`) are hardware-accelerated depends on the installed version. When an animation must stay smooth under load, use the full `transform` string, which is accelerated in the installed version:
 
 ```jsx
+// reduce: from useReducedMotion(); no movement under reduced motion
+
 // Shorthand: may run on the main thread, depending on the version
-<motion.div animate={{ x: 100 }} />
+<motion.div animate={{ x: reduce ? 0 : 100 }} />
 
 // Full transform string: stays smooth even when the main thread is busy
-<motion.div animate={{ transform: "translateX(100px)" }} />
+<motion.div animate={{ transform: reduce ? 'none' : 'translateX(100px)' }} />
 ```
 
 Some Motion animations still run on the main thread in every version: layout animations (`layout`, `layoutId`), animations with `onUpdate` or `transformTemplate`, inertia (drag momentum), and values driven every frame by a motion value (drag, `useTransform`).

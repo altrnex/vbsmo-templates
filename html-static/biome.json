@@ -1,7 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.6.8/schema.json",
   "files": {
-    "includes": ["**", "!**/dist", "!**/node_modules", "!!infra"],
+    "includes": ["**", "!**/dist", "!**/node_modules", "!!infra", "!!.agents"],
     "ignoreUnknown": true
   },
   "formatter": { "indentStyle": "space", "indentWidth": 2 },

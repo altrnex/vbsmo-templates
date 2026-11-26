@@ -1,0 +1,5 @@
+# Redesign notice
+
+Written for this catalogue. It draws on the audit, polish, typeset, layout and critique references in `skill/reference/` of [Impeccable](https://github.com/pbakaus/impeccable), Copyright 2025 Paul Bakaus, at [9e460a87ef338ee9d12c7beed8fedc597a5af5f7](https://github.com/pbakaus/impeccable/tree/9e460a87ef338ee9d12c7beed8fedc597a5af5f7/skill/reference), used under the Apache License 2.0 in [LICENSE](LICENSE). The list of generated-page defaults to avoid paraphrases the `skills/frontend-design` skill of [anthropics/skills](https://github.com/anthropics/skills/tree/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/frontend-design) by Anthropic, also under the Apache License 2.0.
+
+The drawn-on material is modified: the classification of design drift, the polish triage, the type and spacing rules and the squint test are rewritten into this skill's own process. Nothing is taken from Impeccable's command-line tool, detector, live mode, saved reports, scoring, browser steps, sub-agent orchestration or command routing. The third-party platform references named in Impeccable's `NOTICE.md` are not used.

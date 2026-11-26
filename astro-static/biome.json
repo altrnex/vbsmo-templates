@@ -18,7 +18,8 @@
       "!**/build",
       "!**/*.svg",
       "!**/staticfiles",
-      "!!infra"
+      "!!infra",
+      "!!.agents"
     ]
   },
   "formatter": {

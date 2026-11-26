@@ -11,7 +11,8 @@
       "!**/paraglide",
       "!**/.vbsmo-runtime",
       "!**/*.svg",
-      "!!infra"
+      "!!infra",
+      "!!.agents"
     ]
   },
   "formatter": {

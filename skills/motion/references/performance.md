@@ -32,7 +32,7 @@ Start here. Match what the user is seeing, then read the matching section.
 | Animation stutters                            | Animate `transform`/`opacity`, not `width`/`height`/`top`/`margin` |
 | Shadow animation is choppy                    | `filter: drop-shadow()` (composited in Chrome; measure elsewhere)  |
 | Jank only during navigation or loading        | Move the animation to CSS or WAAPI so it runs off the main thread  |
-| Motion `x`/`y` drops frames                   | Upgrade to `motion` 14.2+, or animate the full `transform` string  |
+| Motion `x`/`y` drops frames                   | Animate the full `transform` string for the installed version       |
 | Hand-rolled animation drops frames in React   | Write to `ref.current.style`, not state                            |
 | Drag gets laggier as the list grows           | Stop animating an inherited CSS variable; set `transform` directly |
 | Blur transition lags (especially Safari)      | Keep animated `blur()` under 20px                                  |
@@ -98,16 +98,15 @@ Hardware acceleration means the animation runs off the main thread, so it stays 
 
 Reliably accelerated: `transform` and `opacity`. Gaining support: `filter`, `clip-path`, `background-color`.
 
-**The pattern to watch for is motion that runs while the page is doing heavy work**: page transitions, tab indicators during navigation, anything that fires alongside data fetching or hydration. Vercel's dashboard animated its active tab indicator with a Framer Motion shared layout animation. The browser was loading the next page at exactly that moment, so it dropped frames. Moving it to a CSS animation fixed it.
+**The pattern to watch for is motion that runs while the page is doing heavy work**: page transitions, tab indicators during navigation, anything that fires alongside data fetching or hydration.
 
-When the project already uses Motion: it hands `opacity`, `transform`, `clip-path` and `filter` to WAAPI, so they can be accelerated. The `x`, `y`, `scale`, `rotate` shorthands depend on the version:
+When the project already uses Motion: it hands `opacity`, `transform`, `clip-path` and `filter` to WAAPI, so they can be accelerated. Whether the `x`, `y`, `scale`, `rotate` shorthands are accelerated depends on the installed version, so when the animation has to survive a busy main thread, use the full `transform` string:
 
 ```jsx
-<motion.div animate={{ x: 100 }} />                          // motion 14.2+: hardware-accelerated. Before: main thread, can jank
-<motion.div animate={{ transform: "translateX(100px)" }} />  // hardware-accelerated in every version
+<motion.div animate={{ transform: 'translateX(100px)' }} />
 ```
 
-From `motion` 14.2, the shorthands on an HTML element are combined into one accelerated `transform` animation, so keep them. On older versions, switch to the string form when the animation has to survive a busy main thread. In every version, these stay on the main thread: layout animations (`layout`, `layoutId`), `onUpdate`, `transformTemplate`, inertia, and values driven every frame by a motion value (drag, `useTransform`).
+These stay on the main thread: layout animations (`layout`, `layoutId`), `onUpdate`, `transformTemplate`, inertia, and values driven every frame by a motion value (drag, `useTransform`).
 
 **Acceleration is progressive enhancement.** Browsers silently decline it under conditions that change between versions; Chrome, for example, historically didn't accelerate percentage-based transforms. That's not a reason to stop using `translateY(100%)`. Percentages are the right call for elements of unknown size (it's how toasts and drawers are usually positioned), and correctness beats a best-effort optimization.
 
@@ -188,7 +187,7 @@ Work down this list. It's ordered by how often each one is the cause:
 2. **Does the jank coincide with the page being busy?** Navigation, fetching, hydration, a long task. Move the animation to CSS or WAAPI.
 3. **Is React re-rendering per frame?** State updates in rAF, pointer, or scroll handlers.
 4. **Does it get worse as content grows?** An inherited CSS variable, or too many nodes animating at once.
-5. **Is a CSS variable animated at all?** Or Motion's `x`/`y`/`scale` on a version before 14.2?
+5. **Is a CSS variable animated at all?** Or Motion's `x`/`y`/`scale` shorthands under load instead of the full `transform` string?
 6. **Any animated `blur()` above 20px?**
 7. **Still shifting or stuttering?** Now add `will-change: transform` to the animating element.
 
@@ -196,14 +195,4 @@ Diagnose from the code. A finding that needs a measurement (dropped frames, long
 
 ### Phase 3: Report
 
-For each finding:
-
-```
-**[Element]**: `file.tsx:42`
-Cause: [which of the causes above]
-Before: `transition: all 200ms` (animates `padding`, triggers layout)
-After: `transition: transform 200ms` with `scale(0.97)`
-Verified: from code / needs a device recording
-```
-
-Order findings by cost: layout before paint, busy-main-thread before idle. Then stop. Apply fixes when asked.
+Report each finding in your own words: the element and its file and line, which cause above it is, the change that fixes it, and whether you verified it from code or it needs a device recording. Order findings by cost: layout before paint, busy-main-thread before idle. Then stop. Apply fixes when asked.

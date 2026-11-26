@@ -20,7 +20,7 @@ Two references go with this skill:
 
 Good taste is not personal preference. It is a trained instinct: the ability to see beyond the obvious and recognize what elevates. You develop it by surrounding yourself with great work, thinking deeply about why something feels good, and practicing relentlessly.
 
-When building UI, don't just make it work. Study why the best interfaces feel the way they do. Reverse engineer animations. Inspect interactions. Be curious.
+When building UI, don't just make it work. Study why the best interfaces feel the way they do. Be curious.
 
 ### Unseen details compound
 
@@ -132,7 +132,7 @@ Springs feel more natural than duration-based animations because they simulate r
 
 ### Spring-based mouse interactions
 
-Tying visual changes directly to mouse position feels artificial because it lacks motion. When the project already uses Motion (formerly Framer Motion), use its `useSpring` to interpolate value changes with spring-like behavior instead of updating immediately.
+Tying visual changes directly to mouse position feels artificial because it lacks motion. Only when the project already uses React and Motion (formerly Framer Motion), use its `useSpring` to interpolate value changes with spring-like behavior instead of updating immediately.
 
 ```jsx
 import { useSpring, useTransform } from 'motion/react';
@@ -212,8 +212,9 @@ Start from `scale(0.9)` or higher, combined with opacity. Even a barely-visible 
 
 Popovers should scale in from their trigger, not from center. The default `transform-origin: center` is wrong for almost every popover. **Exception: modals.** Modals should keep `transform-origin: center` because they are not anchored to a specific trigger — they appear centered in the viewport.
 
+`var(--transform-origin)`, `data-starting-style`, `data-ending-style` and `data-instant` below exist only with a component library that sets them; without one, set the origin yourself and use `@starting-style` and a class or attribute the project sets.
+
 ```css
-/* --transform-origin as supplied by the component library (Base UI and others) */
 .popover {
   transform-origin: var(--transform-origin);
 }
@@ -316,14 +317,11 @@ The modern CSS way to animate element entry without JavaScript:
 }
 ```
 
-This replaces the common React pattern of using `useEffect` to set `mounted: true` after initial render. Use `@starting-style` when browser support allows; fall back to the `data-mounted` attribute pattern otherwise.
+Use `@starting-style` when browser support allows; otherwise set a `data-mounted` attribute from script after the element is inserted:
 
-```jsx
-// Legacy pattern (still works everywhere)
-useEffect(() => {
-  setMounted(true);
-}, []);
-// <div data-mounted={mounted}>
+```js
+// Fallback (works everywhere): style [data-mounted] as the entered state
+requestAnimationFrame(() => element.setAttribute('data-mounted', ''));
 ```
 
 ## CSS Transform Mastery
@@ -481,19 +479,19 @@ element.style.transform = `translateY(${distance}px)`;
 
 ### Motion hardware acceleration caveat
 
-Only when the project already uses Motion: from `motion` 14.2, Motion's shorthand properties (`x`, `y`, `scale`, `rotate`) are hardware-accelerated on HTML elements. Before 14.2 they use `requestAnimationFrame` on the main thread, so on those versions use the full `transform` string for hardware acceleration:
+Only when the project already uses Motion: whether its shorthand properties (`x`, `y`, `scale`, `rotate`) are hardware-accelerated depends on the installed version. When an animation must stay smooth under load, use the full `transform` string, which is accelerated in the installed version:
 
 ```jsx
-// motion 14.2+: hardware accelerated. Before 14.2: main thread, drops frames under load
+// Shorthand: may run on the main thread, depending on the version
 <motion.div animate={{ x: 100 }} />
 
-// Hardware accelerated in every version (stays smooth even when main thread is busy)
+// Full transform string: stays smooth even when the main thread is busy
 <motion.div animate={{ transform: "translateX(100px)" }} />
 ```
 
 Some Motion animations still run on the main thread in every version: layout animations (`layout`, `layoutId`), animations with `onUpdate` or `transformTemplate`, inertia (drag momentum), and values driven every frame by a motion value (drag, `useTransform`).
 
-This matters when the browser is simultaneously loading content, running scripts, or painting. At Vercel, the dashboard tab animation used Shared Layout Animations and dropped frames during page loads. Switching to CSS animations (on `transform`/`opacity`, they run on the compositor) fixed it.
+This matters when the browser is simultaneously loading content, running scripts, or painting.
 
 ### CSS animations beat JS under load
 
@@ -518,41 +516,41 @@ element.animate(
 
 ### prefers-reduced-motion
 
-Animations can cause motion sickness. Every animation ships with its reduced-motion variant. Reduced motion means fewer and gentler animations, not zero. Keep opacity and color transitions that aid comprehension. Remove movement and position animations.
+Animations can cause motion sickness. Every animation ships with its reduced-motion handling, using the same pattern as the `accessibility` skill: movement, scale, parallax and autoplay sit inside `@media (prefers-reduced-motion: no-preference)`, so they are opt-in, or are removed under `reduce`. Only opacity and colour changes may remain under reduced motion, as a gentler variant that aids comprehension.
 
 ```css
-@media (prefers-reduced-motion: reduce) {
-  .element {
-    animation: fade 0.2s ease;
-    /* No transform-based motion */
-  }
+.element {
+  opacity: 1;
+  transition: opacity 200ms ease;
 }
 
-@keyframes fade {
-  from {
-    opacity: 0;
+@media (prefers-reduced-motion: no-preference) {
+  .element {
+    transition:
+      opacity 200ms ease,
+      transform 200ms var(--ease-out);
   }
 }
 ```
 
-In JavaScript, read `window.matchMedia('(prefers-reduced-motion: reduce)')`, or the library's hook when the project already uses one:
+In JavaScript, read `window.matchMedia('(prefers-reduced-motion: reduce)').matches`, or the library's hook only when the project already uses React and Motion:
 
-```jsx
-const shouldReduceMotion = useReducedMotion();
-const closedX = shouldReduceMotion ? 0 : '-100%';
+```js
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const closedX = reduce ? 0 : '-100%';
 ```
 
 ### Touch device hover states
 
 ```css
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .element:hover {
     transform: scale(1.05);
   }
 }
 ```
 
-Touch devices trigger hover on tap, causing false positives. Gate hover animations behind this media query.
+Touch devices trigger hover on tap, causing false positives. Gate hover animations behind this media query, and keep scale inside the reduced-motion opt-in.
 
 ## Building Loved Components
 
@@ -569,10 +567,6 @@ Pause toast timers when the tab is hidden. Fill gaps between stacked toasts with
 ### The opacity + height combination
 
 When items enter and exit a list, the opacity change must work well with the height animation. This is often trial and error. There is no formula — you adjust until it feels right.
-
-### Review your work the next day
-
-Review animations with fresh eyes. You notice imperfections the next day that you missed during development.
 
 ### Asymmetric enter/exit timing
 
@@ -595,10 +589,12 @@ Pressing should be slow when it needs to be deliberate (hold-to-delete: 2s linea
 When multiple elements enter together, stagger their appearance. Each element animates in with a small delay after the previous one. This creates a cascading effect that feels more natural than everything appearing at once.
 
 ```css
-.item {
-  opacity: 0;
-  transform: translateY(8px);
-  animation: fadeIn 300ms var(--ease-out) forwards;
+@media (prefers-reduced-motion: no-preference) {
+  .item {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: fadeIn 300ms var(--ease-out) forwards;
+  }
 }
 
 .item:nth-child(1) {
@@ -622,18 +618,11 @@ When multiple elements enter together, stagger their appearance. Each element an
 }
 ```
 
-Keep stagger delays short (30-80ms between items, non-uniform). Long delays make the interface feel slow. Stagger is decorative — never block interaction while stagger animations are playing. Give a group one entrance per container rather than animating every child of the page.
+Under reduced motion the items are simply visible. Keep stagger delays short (30-80ms between items, non-uniform). Long delays make the interface feel slow. Stagger is decorative — never block interaction while stagger animations are playing. Give a group one entrance per container rather than animating every child of the page.
 
 ## Checking Feel
 
-Some things cannot be settled from code: a crossfade, a spring's bounce, the opacity and height balance in an entering list, a gesture on a touch screen. To spot timing issues, temporarily increase the duration to 2-5x normal and look for:
-
-- Do colors transition smoothly, or do you see two distinct states overlapping?
-- Does the easing feel right, or does it start/stop abruptly?
-- Is the transform-origin correct, or does the element scale from the wrong point?
-- Are multiple animated properties (opacity, transform, color) in sync?
-
-Restore the real duration afterwards. In your final message, name what still needs a look by the user, such as a drag or swipe on a real touch device.
+You cannot see the page, so in your final message list what the user should check by eye: crossfades, a spring's bounce, the opacity and height balance in an entering list, and drags or swipes on a real touch device.
 
 ## Review Checklist
 
@@ -648,8 +637,8 @@ When reviewing UI code, check for:
 | Animation on keyboard action                                          | Remove animation entirely                                                                                        |
 | Duration > 300ms on UI element (not a modal, drawer, sheet, or toast) | Reduce to 150-250ms                                                                                              |
 | Hover animation without media query                                   | Add `@media (hover: hover) and (pointer: fine)`                                                                  |
-| Missing `prefers-reduced-motion` variant                              | Add a gentler variant, not zero                                                                                  |
+| Missing `prefers-reduced-motion` handling                             | Put movement and scale inside `no-preference`; only opacity and colour remain                                   |
 | Keyframes on rapidly-triggered element                                | Use CSS transitions for interruptibility                                                                         |
-| Motion `x`/`y` props under load (pre-14.2)                            | Upgrade to 14.2+, or use `transform: "translateX()"`                                                             |
+| Motion `x`/`y` props under load                                       | Use the full `transform` string for the installed version                                                        |
 | Same enter/exit transition speed                                      | Make exit faster than enter (e.g., enter 250ms, exit 200ms)                                                      |
 | Elements all appear at once                                           | Add stagger delay (30-80ms between items, non-uniform)                                                           |

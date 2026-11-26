@@ -7,7 +7,7 @@ description: "Use when the user asks for an accessibility review or fix, or when
 
 This skill reviews and fixes semantics, keyboard and focus behavior, accessible names, forms, announcements, motion and zoom. It reports each failure against the WCAG criterion it breaks and writes the fix in the project's styling system.
 
-Reviewing means two walks. Keyboard-only, where every flow completes without a mouse. Then screen-reader, where every control announces a name, a role and its state. When unsure, take the platform default over a custom rebuild, and remove ARIA rather than add it.
+Reviewing means checking two walks from the code: keyboard-only, where every flow completes without a mouse, and screen-reader, where every control announces a name, a role and its state. Walking them on the rendered page is for the user; report what you could not check as `Not verified`. When unsure, take the platform default over a custom rebuild, and remove ARIA rather than add it.
 
 This skill reports contrast failures and leaves the colors alone unless asked. Animation recipes belong to `motion`.
 
@@ -91,7 +91,7 @@ Moving, blinking or scrolling content needs a visible pause control once it last
 
 Three mechanisms, three jobs. `aria-describedby` carries field-specific validation. A polite live region (`role="status"`) carries non-urgent updates not tied to a control, such as toasts and result counts. `role="alert"` carries urgent untied errors and nothing else.
 
-Repeated polite announcements need a stable empty region rendered before its text updates. Dynamically inserted alerts vary in support, so test them on the screen readers you target. See [screen-readers.md](references/screen-readers.md).
+Repeated polite announcements need a stable empty region rendered before its text updates. Dynamically inserted alerts vary in support across screen readers; report them as `Not verified` until the user has tested the combinations they target. See [screen-readers.md](references/screen-readers.md).
 
 ## Alt text by purpose
 
@@ -127,4 +127,4 @@ Text must survive 200% resize (1.4.4), and the page must reflow at 320px width w
 
 **Verification.** Verify from the code: accessible names on every interactive element, keyboard handlers on non-native controls, focus styles, `prefers-reduced-motion` guards and form labels bound to their inputs. Checks that need the rendered page, such as tabbing the flow in order, reading computed names and roles, confirming a visible focus indicator at every stop and measuring rendered contrast over images or gradients, are for the user to make. Report every check you could not run as `Not verified`.
 
-A standalone review takes its severity ladder and format from [reporting.md](references/reporting.md).
+A review takes its severity ladder from [reporting.md](references/reporting.md).

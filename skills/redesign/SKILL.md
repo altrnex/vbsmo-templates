@@ -1,6 +1,6 @@
 ---
 name: redesign
-description: 'Use when the user asks to redesign, refresh, restyle or polish existing pages, or says the site looks generic, dated or unfinished: it keeps the content and behaviour and changes the design system across every page. Not for a new site or a new page (use hallmark or frontend-design), animation work alone (use motion), an accessibility review alone (use accessibility), or legal pages (use legal-pages).'
+description: "Use when the user asks to redesign, refresh, restyle or polish whole existing pages or the whole site, or says it looks generic: it keeps the content and behaviour and changes the design system across every page. Not for one new component or section (use frontend-design) or new pages (use hallmark or frontend-design), or motion, accessibility or legal pages."
 ---
 
 # Redesign
@@ -66,16 +66,7 @@ Keep the change inside the design. Do not rename routes, rewrite copy, restructu
 
 ## 5. Keep or improve accessibility
 
-The redesign must not make anything less accessible, and should leave it better:
-
-- text contrast at least 4.5:1, large text and interface boundaries at least 3:1, checked against every background the text sits on, in every theme the site has;
-- a visible focus indicator on every interactive element; never remove an outline without a replacement;
-- headings that form an outline, one `<main>`, labels on every form field;
-- every new animation respects `prefers-reduced-motion`;
-- layouts that reflow at 320px width without horizontal scrolling and survive 200% text size;
-- touch targets at least 24×24px, larger where the layout allows.
-
-For a deeper check, the `accessibility` skill has the full rules.
+The `accessibility` skill has the rules and thresholds. For a redesign: never remove a focus outline without a replacement, and keep contrast and reduced-motion handling at least as good as before.
 
 ## 6. Check against the contract
 

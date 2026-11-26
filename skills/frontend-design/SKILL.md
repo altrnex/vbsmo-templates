@@ -1,6 +1,6 @@
 ---
 name: frontend-design
-description: "Use when building new UI inside a site or app (a component, screen, view or section) or reshaping one part of an existing UI, and the work needs a visual direction: palette, typography, layout and copy that do not read as templated defaults. Not for designing a whole new website or landing page (use hallmark), redesigning or polishing a whole existing site (use redesign), animation work (use motion), accessibility review (use accessibility), or legal pages (use legal-pages)."
+description: "Use when building a new component, section or view inside an existing site or app, or reshaping one component or section, and it needs a visual direction that does not read as a templated default. Not for a whole new site or page (use hallmark), restyling whole pages or a whole site (use redesign), or motion, accessibility or legal pages."
 license: Complete terms in LICENSE
 ---
 

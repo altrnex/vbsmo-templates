@@ -51,7 +51,7 @@ Never invent any of these. When the user does not answer, write a clearly marked
 - Name the third parties the site really uses, by name, with what they receive.
 - Use the paths the site's routing conventions suggest, such as `/privacy` and `/terms`, unless pages already exist; then update them in place.
 
-The privacy policy covers, where they apply: who runs the site and how to contact them; what is collected and how; why it is used and, for visitors in the EU, UK or similar regimes, the legal basis; who receives it, including transfers abroad; how long it is kept; the visitor's rights and how to use them; cookies and similar storage; security in plain terms; children; how changes are announced. The section list and the questions behind each are in [references/privacy-policy.md](references/privacy-policy.md).
+The privacy policy sections and the questions behind each are in [references/privacy-policy.md](references/privacy-policy.md).
 
 The terms of service cover, where they apply: who provides the site and the service; what is offered; accounts and the user's obligations; prices, payment, delivery, refunds and cancellation; acceptable use; intellectual property; limits of liability as far as the law allows; termination; governing law and disputes; how the terms change; contact.
 

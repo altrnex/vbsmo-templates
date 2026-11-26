@@ -441,24 +441,25 @@ For destructive actions where a plain click is too easy to fire by accident.
 ```css
 .overlay {
   clip-path: inset(0 100% 0 0);
-  transition: clip-path 200ms var(--ease-out); /* release: snappy */
 }
 
 .button:active .overlay,
 .button[data-holding] .overlay {
   clip-path: inset(0 0 0 0);
-  transition: clip-path 2s linear; /* press: slow and deliberate */
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .overlay {
+    transition: clip-path 200ms var(--ease-out); /* release: snappy */
+  }
+
+  .button:active .overlay,
+  .button[data-holding] .overlay {
+    transition: clip-path 2s linear; /* press: slow and deliberate */
+  }
+
   .button:active {
     transform: scale(0.97);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .overlay {
-    transition: none;
   }
 }
 ```

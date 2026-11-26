@@ -178,12 +178,14 @@ Springs maintain velocity when interrupted — CSS animations and keyframes rest
 Add `transform: scale(0.97)` on `:active`. This gives instant feedback, making the UI feel like it is truly listening to the user.
 
 ```css
-.button {
-  transition: transform 160ms var(--ease-out);
-}
+@media (prefers-reduced-motion: no-preference) {
+  .button {
+    transition: transform 160ms var(--ease-out);
+  }
 
-.button:active {
-  transform: scale(0.97);
+  .button:active {
+    transform: scale(0.97);
+  }
 }
 ```
 
@@ -193,7 +195,7 @@ This applies to any pressable element. The scale should be subtle (0.95-0.98).
 
 Nothing in the real world disappears and reappears completely. Elements animating from `scale(0)` look like they come out of nowhere.
 
-Start from `scale(0.9)` or higher, combined with opacity. Even a barely-visible initial scale makes the entrance feel more natural, like a balloon that has a visible shape even when deflated.
+Start from `scale(0.9)` or higher, combined with opacity. Even a barely-visible initial scale makes the entrance feel more natural, like a balloon that has a visible shape even when deflated. The scaled entering state belongs inside `prefers-reduced-motion: no-preference`; under reduced motion the entrance is opacity only.
 
 ```css
 /* Bad */
@@ -228,16 +230,26 @@ Tooltips should delay before appearing to prevent accidental activation. But onc
 
 ```css
 .tooltip {
-  transition:
-    transform 125ms var(--ease-out),
-    opacity 125ms var(--ease-out);
+  transition: opacity 125ms var(--ease-out);
   transform-origin: var(--transform-origin);
 }
 
 .tooltip[data-starting-style],
 .tooltip[data-ending-style] {
   opacity: 0;
-  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tooltip {
+    transition:
+      transform 125ms var(--ease-out),
+      opacity 125ms var(--ease-out);
+  }
+
+  .tooltip[data-starting-style],
+  .tooltip[data-ending-style] {
+    transform: scale(0.97);
+  }
 }
 
 /* Skip animation on subsequent tooltips */
@@ -251,18 +263,20 @@ Tooltips should delay before appearing to prevent accidental activation. But onc
 CSS transitions can be interrupted and retargeted mid-animation. Keyframes restart from zero. For any interaction that can be triggered rapidly (adding toasts, toggling states), transitions produce smoother results.
 
 ```css
-/* Interruptible - good for UI */
-.toast {
-  transition: transform 400ms ease;
-}
-
-/* Not interruptible - avoid for dynamic UI */
-@keyframes slideIn {
-  from {
-    transform: translateY(100%);
+@media (prefers-reduced-motion: no-preference) {
+  /* Interruptible - good for UI */
+  .toast {
+    transition: transform 400ms ease;
   }
-  to {
-    transform: translateY(0);
+
+  /* Not interruptible - avoid for dynamic UI */
+  @keyframes slideIn {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
 }
 ```
@@ -276,12 +290,14 @@ When a crossfade between two states feels off despite trying different easings a
 Combine blur with scale-on-press (`scale(0.97)`) for a polished button state transition:
 
 ```css
-.button {
-  transition: transform 160ms var(--ease-out);
-}
+@media (prefers-reduced-motion: no-preference) {
+  .button {
+    transition: transform 160ms var(--ease-out);
+  }
 
-.button:active {
-  transform: scale(0.97);
+  .button:active {
+    transform: scale(0.97);
+  }
 }
 
 .button-content {
@@ -305,14 +321,23 @@ The modern CSS way to animate element entry without JavaScript:
 ```css
 .toast {
   opacity: 1;
-  transform: translateY(0);
-  transition:
-    opacity 400ms ease,
-    transform 400ms ease;
+  transition: opacity 400ms ease;
 
   @starting-style {
     opacity: 0;
-    transform: translateY(100%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toast {
+    transform: translateY(0);
+    transition:
+      opacity 400ms ease,
+      transform 400ms ease;
+
+    @starting-style {
+      transform: translateY(100%);
+    }
   }
 }
 ```
@@ -357,6 +382,13 @@ Unlike `width`/`height`, `scale()` also scales an element's children. When scali
   transform-style: preserve-3d;
 }
 
+/* Run the orbit only when motion is allowed */
+@media (prefers-reduced-motion: no-preference) {
+  .orbiter {
+    animation: orbit 8s linear infinite;
+  }
+}
+
 @keyframes orbit {
   from {
     transform: translate(-50%, -50%) rotateY(0deg) translateZ(72px)
@@ -392,28 +424,34 @@ Every element has an anchor point from which transforms execute. The default is 
   clip-path: inset(0 0 0 0);
 }
 
-/* Reveal from left to right */
+/* Reveal from left to right; the reveal animates only when motion is allowed */
 .overlay {
   clip-path: inset(0 100% 0 0);
-  transition: clip-path 200ms var(--ease-out);
 }
 .button:active .overlay {
   clip-path: inset(0 0 0 0);
-  transition: clip-path 2s linear;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .overlay {
+    transition: clip-path 200ms var(--ease-out);
+  }
+  .button:active .overlay {
+    transition: clip-path 2s linear;
+  }
 }
 ```
 
 ### Tabs with perfect color transitions
 
-Duplicate the tab list. Style the copy as "active" (different background, different text color). Clip the copy so only the active tab is visible. Animate the clip on tab change. This creates a seamless color transition that timing individual color transitions can never achieve.
+Duplicate the tab list. Style the copy as "active" (different background, different text color) and give it `aria-hidden="true"` and `inert`, so screen readers and the keyboard meet only the real tabs. Clip the copy so only the active tab is visible, and animate the clip on tab change only under `prefers-reduced-motion: no-preference`. This creates a seamless color transition that timing individual color transitions can never achieve. The full recipe is in [references/build.md](references/build.md).
 
 ### Hold-to-delete pattern
 
-Use `clip-path: inset(0 100% 0 0)` on a colored overlay. On `:active`, transition to `inset(0 0 0 0)` over 2s with linear timing. On release, snap back with 200ms ease-out. Add `scale(0.97)` on the button for press feedback.
+Use `clip-path: inset(0 100% 0 0)` on a colored overlay. On `:active`, transition to `inset(0 0 0 0)` over 2s with linear timing. On release, snap back with 200ms ease-out. Add `scale(0.97)` on the button for press feedback. Transitions and scale only under `prefers-reduced-motion: no-preference`, and give it a keyboard path; the full recipe is in [references/build.md](references/build.md).
 
 ### Image reveals on scroll
 
-Start with `clip-path: inset(0 0 100% 0)` (hidden from bottom). Animate to `inset(0 0 0 0)` when the element enters the viewport. Use `IntersectionObserver`, or the in-view helper of a motion library the project already has, firing once with a margin of about `-100px`.
+Content is visible by default. Only once script has set a class on the root, and only under `prefers-reduced-motion: no-preference`, start with `clip-path: inset(0 0 100% 0)` (hidden from bottom) and animate to `inset(0 0 0 0)` when the element enters the viewport. The full recipe is in [references/build.md](references/build.md). Use `IntersectionObserver`, or the in-view helper of a motion library the project already has, firing once with a margin of about `-100px`.
 
 ### Comparison sliders
 
@@ -573,14 +611,16 @@ When items enter and exit a list, the opacity change must work well with the hei
 Pressing should be slow when it needs to be deliberate (hold-to-delete: 2s linear), but release should always be snappy (200ms ease-out). This pattern applies broadly: slow where the user is deciding, fast where the system is responding.
 
 ```css
-/* Release: fast */
-.overlay {
-  transition: clip-path 200ms var(--ease-out);
-}
+@media (prefers-reduced-motion: no-preference) {
+  /* Release: fast */
+  .overlay {
+    transition: clip-path 200ms var(--ease-out);
+  }
 
-/* Press: slow and deliberate */
-.button:active .overlay {
-  transition: clip-path 2s linear;
+  /* Press: slow and deliberate */
+  .button:active .overlay {
+    transition: clip-path 2s linear;
+  }
 }
 ```
 

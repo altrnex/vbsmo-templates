@@ -1,6 +1,6 @@
 ---
 name: redesign
-description: "Use when the user asks to redesign, refresh, restyle or polish whole existing pages or the whole site, or says it looks generic: it keeps the content and behaviour and changes the design system across every page. Not for one new component or section (use frontend-design) or new pages (use hallmark or frontend-design), or motion, accessibility or legal pages."
+description: "Use when the user asks to redesign, refresh, restyle or polish whole existing pages or the whole site, or says it looks generic: it keeps the content and behaviour and changes the design system across every page. Not for one component or section (use frontend-design), or new pages or sites (use hallmark)."
 ---
 
 # Redesign

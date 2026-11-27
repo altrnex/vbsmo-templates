@@ -1,7 +1,14 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.6.8/schema.json",
   "files": {
-    "includes": ["**", "!**/dist", "!**/node_modules", "!!infra", "!!.agents"],
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/node_modules",
+      "!**/.vbsmo-runtime",
+      "!!infra",
+      "!!.agents"
+    ],
     "ignoreUnknown": true
   },
   "formatter": { "indentStyle": "space", "indentWidth": 2 },

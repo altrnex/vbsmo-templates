@@ -10,6 +10,7 @@
     "includes": [
       "**",
       "!**/node_modules",
+      "!**/.vbsmo-runtime",
       "!**/.astro",
       "!**/.git",
       "!**/.venv",
